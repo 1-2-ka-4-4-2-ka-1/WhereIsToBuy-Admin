@@ -77,7 +77,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="97dp"
         android:layout_marginBottom="60dp"
-        android:text="Forgot ?"
+        android:text="Admin"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"

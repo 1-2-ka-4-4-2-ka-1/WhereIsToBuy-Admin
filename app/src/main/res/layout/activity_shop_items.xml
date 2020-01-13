@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShopsActivity">
+    tools:context=".ShopItemsActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
         android:gravity="center"
-        android:text="Shops"
+        android:text="Items"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_shopsLise_recyclerView"
+        android:id="@+id/rv_shopsLise_recyclerView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fb_add_shopItem"
@@ -41,7 +41,21 @@
         android:clickable="true"
         android:scaleType="fitXY"
         app:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_shopsLise_recyclerView"
-        app:layout_constraintEnd_toEndOf="@+id/rv_shopsLise_recyclerView"
-        app:srcCompat="@drawable/ic_sync_blue" />
+        app:layout_constraintBottom_toBottomOf="@+id/rv_shopsLise_recyclerView1"
+        app:layout_constraintEnd_toEndOf="@+id/rv_shopsLise_recyclerView1"
+        app:srcCompat="@drawable/ic_add_blue" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_upload_shopItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        app:backgroundTint="@color/common_google_signin_btn_text_dark_pressed"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_shopsLise_recyclerView1"
+        app:layout_constraintEnd_toStartOf="@+id/fb_add_shopItem"
+        app:srcCompat="@drawable/ic_upload_blue" />
+
+
 </android.support.constraint.ConstraintLayout>

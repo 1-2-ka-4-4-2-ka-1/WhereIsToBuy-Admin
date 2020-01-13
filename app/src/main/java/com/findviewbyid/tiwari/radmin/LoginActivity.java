@@ -161,8 +161,8 @@ public class LoginActivity extends AppCompatActivity {
 
         final AlertDialog.Builder mDialogueBuilder = new AlertDialog.Builder(LoginActivity.this);
 
-        AlertDialog mForgotPasswordDialogue = mDialogueBuilder.setMessage(" You can call Admin to Recover \n   9030770456 ")
-                .setTitle("Forgot Password")
+        AlertDialog mForgotPasswordDialogue = mDialogueBuilder.setMessage("       You Are Into \n       Admin Console ")
+                .setTitle("Admin")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -1,6 +1,5 @@
 package com.findviewbyid.tiwari.radmin;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -49,14 +48,17 @@ public class ShopsActivity extends AppCompatActivity {
         mShopsRecyclerViewAdapter.setOnShopClickedListener(new ShopsRecyclerViewAdapter.onItemClickListener() {
             @Override
             public void onShopClicked(int position) {
-                Intent intent = new Intent(ShopsActivity.this,EditShopActivity.class);
-                startActivity(intent);
+
+
+                doEditShop();
+
+
             }
         });
 
 
 
-        mSyncShops= findViewById(R.id.fb_sync_shops);
+        mSyncShops= findViewById(R.id.fb_add_shopItem);
         mSyncShops.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +71,10 @@ public class ShopsActivity extends AppCompatActivity {
     }
 
 
+    public void doEditShop(){
+        final ShopsEditDialogue shopsEditDialogue = new ShopsEditDialogue();
+        shopsEditDialogue.show(getSupportFragmentManager(),"Edit Shop");
+    }
 
     public void doGetShops(){
 
@@ -123,7 +129,6 @@ public class ShopsActivity extends AppCompatActivity {
                                 mShopsRecyclerViewAdapter.notifyDataSetChanged();
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
