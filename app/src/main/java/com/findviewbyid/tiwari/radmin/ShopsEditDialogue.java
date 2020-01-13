@@ -98,15 +98,17 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
 
 
 
-        String ShopName = mShopName.getText().toString().trim();
-        String AliasName =  mAliasName.getText().toString().trim();
-        String Address =  mAddress.getText().toString().trim();
-        String Area =  mArea.getText().toString().trim();
-        String Location =  mLocation.getText().toString().trim();
-        String Sublocation =  mSublocation.getText().toString().trim();
-        String Landmark =  mLandmark.getText().toString().trim();
-        String Contactno = mContactno.getText().toString().trim() ;
-        String Group =  mGroup.getText().toString().trim();
+          mShopName.setText(ShopName);
+          mAliasName.setText(AliasName);
+          mAddress.setText(Address);
+          mArea.setText(Area);
+          mLocation.setText(Location);
+          mSublocation.setText(Sublocation);
+          mLandmark.setText(Landmark);
+          mContactno.setText(Contactno);
+          mGroup.setText(Group);
+          mRating.setRating(Rating);
+
 
         mRating.setStepSize(1.0f);
         mRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -137,7 +139,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
                         Toast.makeText(getContext(),"Can not be empty",Toast.LENGTH_LONG).show();
 
                     }else {
-                        listener.getModifiedData(mShopName.getText().toString(),mAliasName.getText().toString(),mAddress.getText().toString(),mArea.getText().toString(),mLocation.getText().toString(),mSublocation.getText().toString(),mLandmark.getText().toString(),mContactno.getText().toString(),mGroup.getText().toString(),Rating,pos);
+                        listener.getModifiedShopsData(mShopName.getText().toString(),mAliasName.getText().toString(),mAddress.getText().toString(),mArea.getText().toString(),mLocation.getText().toString(),mSublocation.getText().toString(),mLandmark.getText().toString(),mContactno.getText().toString(),mGroup.getText().toString(),Rating,pos);
                         builder.dismiss();
                     }
 
@@ -154,7 +156,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
 
     public interface DialogueListener{
         
-        void getModifiedData( String ShopName ,String  AliasName ,String  Address ,String  Area ,String  Location ,String  Sublocation ,String  Landmark ,String  Contactno ,String Group ,int  Rating ,int pos);
+        void getModifiedShopsData( String ShopName ,String  AliasName ,String  Address ,String  Area ,String  Location ,String  Sublocation ,String  Landmark ,String  Contactno ,String Group ,int  Rating ,int pos);
     }
 
 }

@@ -96,6 +96,10 @@ public class ShopItemsActivity extends AppCompatActivity implements AddEditDialo
 
 
 
+
+
+
+
     public void doUploadItems(){
 
         databaseFirebase = FirebaseDatabase.getInstance();

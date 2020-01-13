@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ShopsActivity extends AppCompatActivity {
+public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogue.DialogueListener{
 
 
     private FirebaseDatabase databaseFirebase;
@@ -50,7 +50,7 @@ public class ShopsActivity extends AppCompatActivity {
             public void onShopClicked(int position) {
 
 
-                doEditShop();
+                doEditShop(position);
 
 
             }
@@ -71,10 +71,13 @@ public class ShopsActivity extends AppCompatActivity {
     }
 
 
-    public void doEditShop(){
-        final ShopsEditDialogue shopsEditDialogue = new ShopsEditDialogue();
+    public void doEditShop(int position){
+
+        final ShopsEditDialogue shopsEditDialogue = new ShopsEditDialogue(mShopsList.get(position).getmShopName(),mShopsList.get(position).getmAliasName(),mShopsList.get(position).getmAddress(),mShopsList.get(position).getmArea(),mShopsList.get(position).getmLocation(),mShopsList.get(position).getmSublocation(),mShopsList.get(position).getmLandmark(),mShopsList.get(position).getmContactno(),mShopsList.get(position).getmGroup(),mShopsList.get(position).getmRating(),position);
         shopsEditDialogue.show(getSupportFragmentManager(),"Edit Shop");
+
     }
+
 
     public void doGetShops(){
 
@@ -88,7 +91,6 @@ public class ShopsActivity extends AppCompatActivity {
         }
 
     }
-
 
     public void doSyncShops(){
 
@@ -148,7 +150,13 @@ public class ShopsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void getModifiedShopsData(String ShopName, String AliasName, String Address, String Area, String Location, String Sublocation, String Landmark, String Contactno, String Group, int Rating, int pos) {
+        ShopDetailsModel shopModel= new ShopDetailsModel(ShopName,AliasName,Address,Area,Location,Sublocation,Landmark,Contactno,Group,Rating);
+        mShopsList.set(pos,shopModel);
+        mShopsRecyclerViewAdapter.notifyItemChanged(pos);
+        ShopsStorageClass storage = new ShopsStorageClass(getApplicationContext());
+        storage.shopDetails(mShopsList);
 
-
-
+    }
 }

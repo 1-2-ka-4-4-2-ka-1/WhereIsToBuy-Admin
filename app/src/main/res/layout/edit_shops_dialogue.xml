@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     app:cardCornerRadius="20dp">
 
     <android.support.constraint.ConstraintLayout
@@ -15,10 +15,7 @@
         <ScrollView
             android:layout_width="350dp"
             android:layout_height="729dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
+            android:layout_margin="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,16 +33,17 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        tools:layout_editor_absoluteX="21dp"
-                        tools:layout_editor_absoluteY="58dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="Edit Shop"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:layout_editor_absoluteX="21dp"
+                        tools:layout_editor_absoluteY="58dp" />
 
                     <LinearLayout
                         android:id="@+id/container"
@@ -75,7 +73,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
 
                     </LinearLayout>
 
@@ -107,7 +106,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -141,7 +141,8 @@
                             android:inputType="textPersonName"
                             android:lineSpacingMultiplier="2"
                             android:lines="3"
-                            android:minLines="3" />
+                            android:minLines="3"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -172,7 +173,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -203,7 +205,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -234,7 +237,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -265,7 +269,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -295,8 +300,11 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
+                            android:clickable="true"
+                            android:editable="false"
                             android:ems="10"
-                            android:inputType="numberDecimal" />
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -327,7 +335,8 @@
                             android:layout_weight="1"
                             android:background="@drawable/grey_edittext_layout"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp" />
                     </LinearLayout>
 
                     <LinearLayout

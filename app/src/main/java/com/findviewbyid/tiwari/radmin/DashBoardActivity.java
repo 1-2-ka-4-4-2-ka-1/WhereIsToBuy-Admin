@@ -16,6 +16,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
     private ImageView mShopsActivityButton;
     private ImageView mItemsActivityButton;
+    private ImageView mBillsActivityButton;
 
     private FirebaseDatabase databaseFirebase;
 
@@ -49,7 +50,14 @@ public class DashBoardActivity extends AppCompatActivity {
             }
         });
 
-
+        mBillsActivityButton = findViewById(R.id.iv_billss_activity);
+        mBillsActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashBoardActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
