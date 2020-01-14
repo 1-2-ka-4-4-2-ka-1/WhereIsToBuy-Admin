@@ -4,6 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -87,7 +92,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         mapping.put("_mbill_id",_mbill_id);
         mapping.put("_count",_count);
-        mapping.put("_date",_date);
+        mapping.put("_date",parseDateToddMMyyyy(_date));
         mapping.put("_shopname",_shopname);
         mapping.put("_shop_id",_shop_id);
 
@@ -95,5 +100,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public String parseDateToddMMyyyy(String time) {
+        String inputPattern = "dd/MM/yy";
+        String outputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i(time,str);
+        return str;
+    }
 }

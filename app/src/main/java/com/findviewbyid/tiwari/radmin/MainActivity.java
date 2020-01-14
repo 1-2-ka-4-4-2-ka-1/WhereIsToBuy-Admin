@@ -1,13 +1,17 @@
 package com.findviewbyid.tiwari.radmin;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,7 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<BillItem> mBillItems;
 
 
+
+
+    private BottomSheetBehavior mBottomSheetBehavior;
+    private View mFilterBillsLayout;
+    private FloatingActionButton mFloatingActionButtonBringUp;
 
     public static DataBaseHelper dataBaseHelper;
     SQLiteDatabase database;
@@ -57,11 +69,54 @@ public class MainActivity extends AppCompatActivity {
         database = dataBaseHelper.getWritableDatabase();
 
 
+        mFilterBillsLayout = findViewById(R.id.filter_bills_layout);
+        mFilterBillsLayout.setVisibility(View.VISIBLE);
+
+        View bottomSheet = findViewById(R.id.filters_bottom_sheet);
+
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        mBottomSheetBehavior.setHideable(false);
+        mBottomSheetBehavior.setPeekHeight(150);
+
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback(){
+                                                        @Override
+                                                        public void onStateChanged(@NonNull View view, int i) {
+                                                            switch (i) {
+                                                                case BottomSheetBehavior.STATE_EXPANDED: {
+                                                                    mFloatingActionButtonBringUp.setScaleY(-1);
+                                                                    break;
+                                                                }
+                                                                case BottomSheetBehavior.STATE_COLLAPSED: {
+                                                                    mFloatingActionButtonBringUp.setScaleY(1);
+
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onSlide(@NonNull View view, float v) {
+                                                            mFloatingActionButtonBringUp.setRotationX(v);
+                                                        }
+            });
+        mFloatingActionButtonBringUp=findViewById(R.id.fb_muve_up_filters);
+        mFloatingActionButtonBringUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }else if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+       // parseDateToddMMyyyy("17/12/2019");
+
 
 //        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
 //        lodeItemsDataAsyncTask.execute();
 
-
+////
 //        LoadMappingData lodeItemsDataAsyncTask = new LoadMappingData();
 //        lodeItemsDataAsyncTask.execute();
 
@@ -81,12 +136,41 @@ public class MainActivity extends AppCompatActivity {
 //
 //        }
 
+//
+        String query = "SELECT * FROM  _mapping_tb WHERE  Date(_date)>date(?)";
+        Cursor cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy("17/12/19")});
+//
+//        String query = "SELECT * FROM  _all_bills_tb WHERE _unit=?  AND _amount=?";
+//        Cursor cursor = database.rawQuery(query, new String[]{"piece","25.0"});
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                     //Log.i("------------",cursor.getString(0)+"--- "+cursor.getString(1)+"---- "+cursor.getString(2)+" ---"+cursor.getString(3)+" ---"+cursor.getString(4)+"--- "+cursor.getString(5)+"--- "+cursor.getString(6)+" ---"+cursor.getString(7)+" ---");//+cursor.getString(8)+cursor.getString(9)+" ---"+cursor.getString(10)+" ---"+cursor.getString(11)+" ---"+cursor.getString(12)+" ---"+cursor.getString(13));
+                    Log.i("------------",cursor.getString(0)+"--- "+cursor.getString(1)+cursor.getString(2)+" ---"+cursor.getString(3)+" ---"+cursor.getString(4)+"--- ");
+                } while (cursor.moveToNext());
+            }
+            else {
+                Toast.makeText(MainActivity.this, "Not Found" ,Toast.LENGTH_LONG).show();
+            }
 
+            cursor.close();
 
-
+        }else {
+            Toast.makeText(MainActivity.this, "Not Found null" ,Toast.LENGTH_LONG).show();
+        }
 
     }
 
+
+//   /song Name: 1--- 90---- 2 ---2019-12-10 ---new shop
+//    2--- 68---- 3 ---2019-12-17 ---new shop
+//    3--- 640---- 38 ---2020-01-02 ---new shop
+//10-12-2019
+//        17-12-2019
+//        02-01-2020
+//        10-12-2019
+//        17-12-2019
+//        02-01-2020
 
 //    public void doSyncShops(){
 //        mAllBillsList.clear();
@@ -146,6 +230,25 @@ public class MainActivity extends AppCompatActivity {
 //
 //    }
 
+    public String parseDateToddMMyyyy(String time) {
+        String inputPattern = "dd/MM/yy";
+        String outputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i(time,str);
+        return str;
+    }
+
 
     public class LoadeBillsDataAsyncTask extends AsyncTask<ArrayList<BillItem>, Void, ArrayList<BillItem>> {
         @Override
@@ -184,6 +287,10 @@ public class MainActivity extends AppCompatActivity {
                                             , Double.parseDouble(snapshot1.child("mitem_amount").getValue().toString())
                                     );
                                     mBillItems.add(billItem);
+                                    dataBaseHelper.insertBill(String.valueOf(billItem.getBill_id()),String.valueOf(billItem.getMitem_amount()),
+                                            billItem.getMitem_desc(),billItem.getMitem_id_label(),String.valueOf(billItem.getMitem_qty()),
+                                            String.valueOf(billItem.getMitem_rate()),billItem.getMitem_unit(),database);
+
                                     mBillsRecyclerViewAdapter.notifyItemInserted(i);
                                     i++;
                                 }
