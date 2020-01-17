@@ -13,10 +13,19 @@ public class ShopDetailsModel {
     private String mContactno;
     private String mGroup;
 
+    private String mShopId;
     private int mRating;
 
 
-    public ShopDetailsModel(String ShopName , String AliasName , String Address , String Area , String Location , String Sublocation , String Landmark , String Contactno ,String Group , int Rating ){
+    public void setmShopId(String mShopId) {
+        this.mShopId = mShopId;
+    }
+
+    public String getmShopId() {
+        return mShopId;
+    }
+
+    public ShopDetailsModel(String ShopName , String AliasName , String Address , String Area , String Location , String Sublocation , String Landmark , String Contactno , String Group , int Rating , String ShopId ){
 
         mShopName = ShopName ;
         mAliasName =  AliasName;
@@ -28,6 +37,7 @@ public class ShopDetailsModel {
         mContactno = Contactno ;
         mGroup =  Group;
         mRating = Rating;
+        mShopId = ShopId;
 
     }
 

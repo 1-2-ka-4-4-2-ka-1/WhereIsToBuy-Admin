@@ -1,5 +1,6 @@
 package com.findviewbyid.tiwari.radmin;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -29,6 +30,8 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
 
     private FloatingActionButton mSyncShops;
 
+    public static DataBaseHelper dataBaseHelper;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,9 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
         });
 
 
+        dataBaseHelper = new DataBaseHelper(this);
+        database = dataBaseHelper.getWritableDatabase();
+
 
         mSyncShops= findViewById(R.id.fb_add_shopItem);
         mSyncShops.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +79,7 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
 
     public void doEditShop(int position){
 
-        final ShopsEditDialogue shopsEditDialogue = new ShopsEditDialogue(mShopsList.get(position).getmShopName(),mShopsList.get(position).getmAliasName(),mShopsList.get(position).getmAddress(),mShopsList.get(position).getmArea(),mShopsList.get(position).getmLocation(),mShopsList.get(position).getmSublocation(),mShopsList.get(position).getmLandmark(),mShopsList.get(position).getmContactno(),mShopsList.get(position).getmGroup(),mShopsList.get(position).getmRating(),position);
+        final ShopsEditDialogue shopsEditDialogue = new ShopsEditDialogue(mShopsList.get(position).getmShopName(),mShopsList.get(position).getmAliasName(),mShopsList.get(position).getmAddress(),mShopsList.get(position).getmArea(),mShopsList.get(position).getmLocation(),mShopsList.get(position).getmSublocation(),mShopsList.get(position).getmLandmark(),mShopsList.get(position).getmContactno(),mShopsList.get(position).getmGroup(),mShopsList.get(position).getmRating(),mShopsList.get(position).getmShopId(),position);
         shopsEditDialogue.show(getSupportFragmentManager(),"Edit Shop");
 
     }
@@ -125,9 +131,12 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
                                         ,snapshot1.child("mLandmark").getValue().toString()
                                         ,snapshot1.child("mContactno").getValue().toString()
                                         ,snapshot1.child("mGroup").getValue().toString()
-                                        ,Integer.parseInt(snapshot1.child("mRating").getValue().toString()));
+                                        ,Integer.parseInt(snapshot1.child("mRating").getValue().toString())
+                                        ,snapshot1.child("mShopId").getValue().toString());
+
                                 storage.addNewShop(shopDetailsModel);
                                 mShopsList.add(shopDetailsModel);
+                                dataBaseHelper.insertShop(shopDetailsModel.getmShopName(),shopDetailsModel.getmAliasName(),shopDetailsModel.getmAddress(),shopDetailsModel.getmArea(),shopDetailsModel.getmLocation(),shopDetailsModel.getmSublocation(),shopDetailsModel.getmLandmark(),shopDetailsModel.getmContactno(),String.valueOf(shopDetailsModel.getmRating()),shopDetailsModel.getmGroup(),shopDetailsModel.getmShopId(),database);
                                 mShopsRecyclerViewAdapter.notifyDataSetChanged();
                             }
                         }
@@ -136,7 +145,6 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
 
                         }
                     });
-
                 }
             }
 
@@ -145,14 +153,11 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
 
             }
         });
-
-
-
     }
 
     @Override
-    public void getModifiedShopsData(String ShopName, String AliasName, String Address, String Area, String Location, String Sublocation, String Landmark, String Contactno, String Group, int Rating, int pos) {
-        ShopDetailsModel shopModel= new ShopDetailsModel(ShopName,AliasName,Address,Area,Location,Sublocation,Landmark,Contactno,Group,Rating);
+    public void getModifiedShopsData(String ShopName, String AliasName, String Address, String Area, String Location, String Sublocation, String Landmark, String Contactno, String Group, int Rating,String ShopId, int pos) {
+        ShopDetailsModel shopModel= new ShopDetailsModel(ShopName,AliasName,Address,Area,Location,Sublocation,Landmark,Contactno,Group,Rating,ShopId);
         mShopsList.set(pos,shopModel);
         mShopsRecyclerViewAdapter.notifyItemChanged(pos);
         ShopsStorageClass storage = new ShopsStorageClass(getApplicationContext());

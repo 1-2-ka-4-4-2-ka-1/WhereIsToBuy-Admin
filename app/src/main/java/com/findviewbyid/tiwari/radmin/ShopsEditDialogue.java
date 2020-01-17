@@ -38,6 +38,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
     private  String Contactno ;
     private String Group ;;
     private  int Rating;
+    private  String ShopId;
     private int pos;
 
 
@@ -60,7 +61,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
 
 
     @SuppressLint("ValidFragment")
-    public ShopsEditDialogue( String mShopName ,String mAliasName , String mAddress,String mArea ,String mLocation ,String mSublocation ,String mLandmark ,String mContactno ,String mGroup ,int mRating, int pos){
+    public ShopsEditDialogue( String mShopName ,String mAliasName , String mAddress,String mArea ,String mLocation ,String mSublocation ,String mLandmark ,String mContactno ,String mGroup ,int mRating,String ShopId, int pos){
 
         this.ShopName = mShopName;
         this.AliasName = mAliasName;
@@ -73,6 +74,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
         this.Group = mGroup;
         this.Rating = mRating;
         this.pos = pos;
+        this.ShopId = ShopId;
 
 
     }
@@ -139,7 +141,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
                         Toast.makeText(getContext(),"Can not be empty",Toast.LENGTH_LONG).show();
 
                     }else {
-                        listener.getModifiedShopsData(mShopName.getText().toString(),mAliasName.getText().toString(),mAddress.getText().toString(),mArea.getText().toString(),mLocation.getText().toString(),mSublocation.getText().toString(),mLandmark.getText().toString(),mContactno.getText().toString(),mGroup.getText().toString(),Rating,pos);
+                        listener.getModifiedShopsData(mShopName.getText().toString(),mAliasName.getText().toString(),mAddress.getText().toString(),mArea.getText().toString(),mLocation.getText().toString(),mSublocation.getText().toString(),mLandmark.getText().toString(),mContactno.getText().toString(),mGroup.getText().toString(),Rating,ShopId,pos);
                         builder.dismiss();
                     }
 
@@ -156,7 +158,7 @@ public class ShopsEditDialogue extends AppCompatDialogFragment {
 
     public interface DialogueListener{
         
-        void getModifiedShopsData( String ShopName ,String  AliasName ,String  Address ,String  Area ,String  Location ,String  Sublocation ,String  Landmark ,String  Contactno ,String Group ,int  Rating ,int pos);
+        void getModifiedShopsData( String ShopName ,String  AliasName ,String  Address ,String  Area ,String  Location ,String  Sublocation ,String  Landmark ,String  Contactno ,String Group ,int  Rating ,String ShopId,int pos);
     }
 
 }

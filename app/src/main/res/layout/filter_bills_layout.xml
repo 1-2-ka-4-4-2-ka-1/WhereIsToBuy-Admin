@@ -45,93 +45,109 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/tv_filter_on_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="24dp"
-        android:text="12/04/20"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
+        android:text="00/00/00"
         android:textColor="#1976D2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tv_filter_from_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="67dp"
-        android:text="12/04/20"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
+        android:text="00/00/00"
         android:textColor="#1976D2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/tv_filter_till_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="67dp"
-        android:text="12/08/20"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
+        android:text="00/00/00"
         android:textColor="#1976D2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-    <TextView
-        android:id="@+id/textView25"
+    <Spinner
+        android:id="@+id/tv_filter_in_month"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="17dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
         android:text="09"
         android:textColor="#1976D2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-    <TextView
-        android:id="@+id/textView26"
+    <Spinner
+        android:id="@+id/tv_filter_shop"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginStart="31dp"
         android:layout_marginTop="24dp"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
         android:text="Amazon 12/F"
         android:textColor="#1976D2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-    <TextView
-        android:id="@+id/textView28"
+    <Spinner
+        android:id="@+id/tv_filter_area"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="54dp"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
         android:text="South Delhi"
         android:textColor="#1976D2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
-    <TextView
-        android:id="@+id/textView27"
+    <Spinner
+        android:id="@+id/tv_filter_group"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginStart="31dp"
         android:layout_marginTop="27dp"
         android:layout_marginBottom="69dp"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
         android:text="C1 Janakpuri"
         android:textColor="#1976D2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="378dp"
-        android:layout_height="41dp"
+    <Spinner
+        android:id="@+id/tv_filter_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="17dp"
         android:layout_marginBottom="28dp"
+        android:background="@drawable/spinner_layout"
         android:gravity="center"
+        android:spinnerMode="dialog"
         android:text="हरी मिर्च अचार मसाला "
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
@@ -180,7 +196,7 @@
         android:layout_marginEnd="85dp"
         android:text="Till"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_filter_from_date" />
 
     <TextView
         android:id="@+id/textView15"
@@ -190,7 +206,7 @@
         android:layout_marginTop="22dp"
         android:text="In Month"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_filter_on_date" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -199,7 +215,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/tv_filter_till_date"
         app:srcCompat="@color/textGrey" />
 
     <TextView
@@ -242,5 +258,23 @@
         android:layout_marginTop="60dp"
         android:text="Group"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_filter_shop" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_clear_filters"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_search_blue" />
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

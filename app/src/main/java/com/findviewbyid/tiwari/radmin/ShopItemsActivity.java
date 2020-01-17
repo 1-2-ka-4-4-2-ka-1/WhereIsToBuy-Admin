@@ -210,7 +210,6 @@ public class ShopItemsActivity extends AppCompatActivity implements AddEditDialo
 
         databaseFirebase = FirebaseDatabase.getInstance();
        DatabaseReference shopItemsRef= databaseFirebase.getReference("Shop-items");
-
         shopItemsRef.addValueEventListener(new ValueEventListener() {
 
             @Override

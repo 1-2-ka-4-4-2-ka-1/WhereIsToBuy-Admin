@@ -30,10 +30,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String sql = "CREATE TABLE IF NOT EXISTS _all_bills_tb(_id INTEGER PRIMARY KEY AUTOINCREMENT, _bill_id VARCHAR ,_amount VARCHAR , _desc VARCHAR, _id_label VARCHAR , _qty VARCHAR, _rate VARCHAR, _unit VARCHAR )";
+        String sql = "CREATE TABLE IF NOT EXISTS _all_bills_tb(_id INTEGER PRIMARY KEY AUTOINCREMENT, _bill_id VARCHAR ,_amount VARCHAR , _desc VARCHAR, _id_label VARCHAR , _qty VARCHAR, _rate VARCHAR, _unit VARCHAR ,_count VARCHAR, _date VARCHAR, _shop_id VARCHAR)";
         db.execSQL(sql);
 
-        sql = "CREATE TABLE IF NOT EXISTS _all_shops_tb(_id INTEGER PRIMARY KEY AUTOINCREMENT, _shop_name VARCHAR,_alias VARCHAR ,_address VARCHAR, _area VARCHAR , _location VARCHAR, _sublocation VARCHAR , _landmark VARCHAR , _contact INTEGER , _ratiing VARCHAR ,_group VARCHAR)";
+        sql = "CREATE TABLE IF NOT EXISTS _all_shops_tb(_id INTEGER PRIMARY KEY AUTOINCREMENT, _shop_name VARCHAR,_alias VARCHAR ,_address VARCHAR, _area VARCHAR , _location VARCHAR, _sublocation VARCHAR , _landmark VARCHAR , _contact INTEGER , _ratiing VARCHAR ,_group VARCHAR,_shop_id VARCHAR)";
         db.execSQL(sql);
 
         sql = "CREATE TABLE IF NOT EXISTS _mapping_tb (_id INTEGER PRIMARY KEY AUTOINCREMENT, _mbill_id VARCHAR, _count VARCHAR, _date VARCHAR, _shopname VARCHAR, _shop_id VARCHAR)";
@@ -49,7 +49,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertBill(String _bill_id  ,String _amount  ,String _desc ,String _id_label  ,String _qty ,String _rate ,String _unit, SQLiteDatabase database )
+    public void insertBill(String _bill_id  ,String _amount  ,String _desc ,String _id_label  ,String _qty ,String _rate ,String _unit,String _shop_id  ,String _date  ,String _count , SQLiteDatabase database )
     {
         ContentValues bill=new ContentValues();
 
@@ -60,13 +60,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         bill.put("_qty",_qty);
         bill.put("_rate",_rate);
         bill.put("_unit",_unit);
-
+        bill.put("_count",_count);
+        bill.put("_date",parseDateToddMMyyyy(_date));
+        bill.put("_shop_id",_shop_id);
         database.insert(_all_bills_tb,null, bill);
 
     }
 
 
-    public void insertShop(String  _shop_name ,String _alias  ,String  _address ,String _area  ,String _location ,String _sublocation  ,String _landmark  ,String _contact  ,String _ratiing  ,String _group , SQLiteDatabase database )
+    public void insertShop(String  _shop_name ,String _alias  ,String  _address ,String _area  ,String _location ,String _sublocation  ,String _landmark  ,String _contact  ,String _ratiing  ,String _group ,String _shop_id, SQLiteDatabase database )
     {
         ContentValues shop=new ContentValues();
 
@@ -77,8 +79,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         shop.put("_location",_location);
         shop.put("_sublocation",_sublocation);
         shop.put("_landmark",_landmark);
-        shop.put("_contact",_contact);
+        shop.put("_contact",String.valueOf(Long.parseLong(_contact)%1000));
         shop.put("_ratiing",_ratiing);
+        shop.put("_shop_id",_shop_id);
         shop.put("_group",_group);
 
         database.insert(_all_shops_tb,null, shop);
