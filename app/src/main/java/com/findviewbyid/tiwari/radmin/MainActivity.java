@@ -854,10 +854,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         String shop="%%";
         String area="%%";
         String group="%%";
-        String on="%%";
-        String from="%%";
-        String till="%%";
-        String month="%%";
+
 
         if(!mFilterItem.getSelectedItem().toString().equals("----")){
            desc=mFilterItem.getSelectedItem().toString();
@@ -877,21 +874,65 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             group=mFilterGroup.getSelectedItem().toString();
         }
 
+        boolean date_selectd = false;
 
-        String query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+        String query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?)  AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+        Cursor cursor = database.rawQuery(query, new String[]{desc,shop,area,group});
 
-        Cursor cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20"),shop,area,group});
+        if(!mFilterOnDate.getText().toString().equals("00/00/00")){
+
+            query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE Date(B._date) = Date(?) AND B._desc LIKE (?)  AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+            cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy(mFilterOnDate.getText().toString()),desc,shop,area,group});
+            date_selectd = true;
+        }
+        else if(!mFilterFromDate.getText().toString().equals( "00/00/00")){
+            query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE  Date(B._date) BETWEEN Date(?) AND  date(?)    AND B._desc LIKE (?)  AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+            cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy(mFilterFromDate.getText().toString()),parseDateToddMMyyyy(mFilterTillDate.getText().toString()),desc,shop,area,group});
+            date_selectd = true;
+
+        }else if(!mFilterInMonth.getSelectedItem().toString().equals("----")){
+             query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+             cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20"),shop,area,group});
+            date_selectd = true;
+        }
+
+
+        if( shop.equals("%%" ) && area.equals("%%") && group.equals("%%") && date_selectd){
+            if(!mFilterOnDate.getText().toString().equals("00/00/00")){
+
+                query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE Date(B._date) = Date(?) AND B._desc LIKE (?) ";
+                cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy(mFilterOnDate.getText().toString()),desc});
+                date_selectd = true;
+            }
+            else if(!mFilterFromDate.getText().toString().equals( "00/00/00")){
+                query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE  Date(B._date) BETWEEN Date(?) AND  date(?)    AND B._desc LIKE (?) ";
+                cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy(mFilterFromDate.getText().toString()),parseDateToddMMyyyy(mFilterTillDate.getText().toString()),desc});
+                date_selectd = true;
+
+            }else if(!mFilterInMonth.getSelectedItem().toString().equals("----")){
+                query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) ";
+                cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20")});
+                date_selectd = true;
+            }
+        }
+
+        date_selectd = false;
+
+
+//        String query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+//        Cursor cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20"),shop,area,group});
         mBillItems.clear();
-
+        mBillsRecyclerViewAdapter.notifyDataSetChanged();
         if (cursor != null) {
 
             if (cursor.moveToFirst()) {
 
 
                 do {
+
                     Log.i("------------",cursor.getString(0)+"--- "+cursor.getString(1)+"---- "+cursor.getString(2)+" ---"+cursor.getString(3)+" ---"+cursor.getString(4)+"--- "+cursor.getString(5)+"--- "+cursor.getString(6));
-                    mBillItems.add(new BillItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),Double.parseDouble(cursor.getString(3)),Double.parseDouble(cursor.getString(4)),Double.parseDouble(cursor.getString(5)) , cursor.getLong(6) , cursor.getString(7),cursor.getInt(8)));                } while (cursor.moveToNext());
-                mBillsCount.setText(String.valueOf(mBillItems.size()));
+                    mBillItems.add(new BillItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),Double.parseDouble(cursor.getString(3)),Double.parseDouble(cursor.getString(4)),Double.parseDouble(cursor.getString(5)) , cursor.getLong(6) , cursor.getString(7),cursor.getInt(8)));
+                } while (cursor.moveToNext());
                 mBillsRecyclerViewAdapter.notifyDataSetChanged();
             }
             else {
@@ -903,6 +944,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         }else {
             Toast.makeText(MainActivity.this, "Not Found null" ,Toast.LENGTH_LONG).show();
         }
+        mBillsCount.setText(String.valueOf(mBillItems.size()));
 
     }
 
@@ -917,8 +959,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         mFilterArea.setSelection(0);
         mFilterGroup.setSelection(0);
 
-        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
-        lodeItemsDataAsyncTask.execute();
+//        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
+//        lodeItemsDataAsyncTask.execute();
 
     }
 
@@ -936,7 +978,6 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
                 mFilterItem.setSelection(0);
             }
         }
-
 
 
         mFilterInMonthList.add("----");
