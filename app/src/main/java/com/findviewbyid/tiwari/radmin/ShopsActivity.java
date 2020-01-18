@@ -100,7 +100,6 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
 
     public void doSyncShops(){
 
-
         mShopsList.clear();
         final ShopsStorageClass storage = new ShopsStorageClass(DashBoardActivity.activity_dashBoard);
         storage.clearCachedShops();
@@ -154,7 +153,6 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
             }
         });
     }
-
     @Override
     public void getModifiedShopsData(String ShopName, String AliasName, String Address, String Area, String Location, String Sublocation, String Landmark, String Contactno, String Group, int Rating,String ShopId, int pos) {
         ShopDetailsModel shopModel= new ShopDetailsModel(ShopName,AliasName,Address,Area,Location,Sublocation,Landmark,Contactno,Group,Rating,ShopId);

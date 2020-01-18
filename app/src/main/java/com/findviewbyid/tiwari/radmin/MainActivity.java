@@ -361,7 +361,11 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             }
         });
 
-
+        mFilterItem.setSelection(0);
+        mFilterInMonth.setSelection(0);
+        mFilterShop.setSelection(0);
+        mFilterArea.setSelection(0);
+        mFilterGroup.setSelection(0);
 
 //        mFilterItem.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -455,7 +459,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             }
         });
 
-
+        doSetupAdapters();
 
 
 
@@ -463,8 +467,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
        // parseDateToddMMyyyy("17/12/2019");
 
 
-//        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
-//        lodeItemsDataAsyncTask.execute();
+        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
+        lodeItemsDataAsyncTask.execute();
 
 ////
 //        LoadMappingData lodeItemsDataAsyncTask = new LoadMappingData();
@@ -508,12 +512,9 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
        // String query = "SELECT *   FROM   _all_bills_tb  WHERE _shop_id = (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name = (?) ) ";
         //String query = "SELECT *   FROM   _all_bills_tb ";
-        String query = "SELECT *   FROM   _all_bills_tb WHERE _date = (?) ";
+        String query = "SELECT *   FROM   _all_bills_tb WHERE Date(_date) = Date((?)) ";
 
         Cursor cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy("01/01/70")});
-
-
-
 
 
 //
@@ -549,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         }else {
             Toast.makeText(MainActivity.this, "Not Found null" ,Toast.LENGTH_LONG).show();
         }
-        doSetupAdapters();
+
 
     }
 
@@ -892,7 +893,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
         }else if(!mFilterInMonth.getSelectedItem().toString().equals("----")){
              query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
-             cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20"),shop,area,group});
+             cursor = database.rawQuery(query, new String[]{desc,"%%-08-20",shop,area,group});
             date_selectd = true;
         }
 
@@ -902,21 +903,25 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
                 query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE Date(B._date) = Date(?) AND B._desc LIKE (?) ";
                 cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy(mFilterOnDate.getText().toString()),desc});
-                date_selectd = true;
+
             }
             else if(!mFilterFromDate.getText().toString().equals( "00/00/00")){
                 query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE  Date(B._date) BETWEEN Date(?) AND  date(?)    AND B._desc LIKE (?) ";
                 cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy(mFilterFromDate.getText().toString()),parseDateToddMMyyyy(mFilterTillDate.getText().toString()),desc});
-                date_selectd = true;
+
 
             }else if(!mFilterInMonth.getSelectedItem().toString().equals("----")){
-                query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) ";
-                cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20")});
-                date_selectd = true;
+                query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date LIKE (?) ";
+                cursor = database.rawQuery(query, new String[]{desc,"%%-02-20"});
             }
         }
 
         date_selectd = false;
+
+        if(desc.equals("%%") && !date_selectd ){
+             query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE  B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
+             cursor = database.rawQuery(query, new String[]{shop,area,group});
+        }
 
 
 //        String query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
@@ -927,9 +932,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
             if (cursor.moveToFirst()) {
 
-
                 do {
-
                     Log.i("------------",cursor.getString(0)+"--- "+cursor.getString(1)+"---- "+cursor.getString(2)+" ---"+cursor.getString(3)+" ---"+cursor.getString(4)+"--- "+cursor.getString(5)+"--- "+cursor.getString(6));
                     mBillItems.add(new BillItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),Double.parseDouble(cursor.getString(3)),Double.parseDouble(cursor.getString(4)),Double.parseDouble(cursor.getString(5)) , cursor.getLong(6) , cursor.getString(7),cursor.getInt(8)));
                 } while (cursor.moveToNext());
@@ -958,7 +961,10 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         mFilterShop.setSelection(0);
         mFilterArea.setSelection(0);
         mFilterGroup.setSelection(0);
-
+        mFilterOnDate.setAlpha(0.2f);
+        mFilterFromDate.setAlpha(0.2f);
+        mFilterTillDate.setAlpha(0.2f);
+        mFilterInMonth.setAlpha(0.2f);
 //        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
 //        lodeItemsDataAsyncTask.execute();
 
@@ -974,11 +980,11 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
                 for(int i=0;i<shop_items.size();i++){
                     mFilterItemList.add(shop_items.get(i).getMitem_desc());
                 }
-                mFilterItemAdapter.notifyDataSetChanged();
+
                 mFilterItem.setSelection(0);
             }
         }
-
+        mFilterItemAdapter.notifyDataSetChanged();
 
         mFilterInMonthList.add("----");
         mFilterInMonthList.add(" jan ");
@@ -1010,15 +1016,15 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
                     mFilterAreaList.add(shops_list.get(i).getmArea());
                     mFilterGroupList.add(shops_list.get(i).getmGroup());
                 }
-               mFilterShopAdapter.notifyDataSetChanged();
-               mFilterAreaAdapter.notifyDataSetChanged();
-               mFilterGroupAdapter.notifyDataSetChanged();
+
                mFilterShop.setSelection(0);
                mFilterArea.setSelection(0);
                mFilterGroup.setSelection(0);
             }
         }
-
+        mFilterShopAdapter.notifyDataSetChanged();
+        mFilterAreaAdapter.notifyDataSetChanged();
+        mFilterGroupAdapter.notifyDataSetChanged();
 
     }
 
@@ -1039,34 +1045,6 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         DialogFragment date_picker = new DatePickerFragment(2);
         date_picker.show(getSupportFragmentManager(),"date picker");
     }
-
-    public void doGetItemFilterQuery(){
-
-
-
-    }
-    public void doGetOnDateFilterQuery(){
-
-    }
-    public void doGetFromDateFilterQuery(){
-
-    }
-    public void doGetTillDateFilterQuery(){
-
-    }
-    public void doGetInMonthFilterQuery(){
-
-    }
-    public void doGetShopFilterQuery(){
-
-    }
-    public void doGetAreaFilterQuery(){
-
-    }
-    public void doGetGroupFilterQuery(){
-
-    }
-
 
     public String parseDateToddMMyyyy(String time) {
         String inputPattern = "dd/MM/yy";
@@ -1129,32 +1107,62 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             mDataRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         DatabaseReference mShopsRef = snapshot.child("bills").getRef();
                         mShopsRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                int i = 0;
+
+
                                 for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
-                                    BillItem billItem = new BillItem(snapshot1.child("bill_id").getValue().toString()
 
-                                            , snapshot1.child("mitem_desc").getValue().toString()
-                                            , snapshot1.child("mitem_unit").getValue().toString()
-                                            , Double.parseDouble(snapshot1.child("mitem_qty").getValue().toString())
-                                            , Double.parseDouble(snapshot1.child("mitem_rate").getValue().toString())
-                                            , Double.parseDouble(snapshot1.child("mitem_amount").getValue().toString())
-                                            , Long.parseLong(snapshot1.child("mShopId").getValue().toString())
-                                            , snapshot1.child("mDate").getValue().toString()
-                                            ,Integer.parseInt(snapshot1.child("mCount").getValue().toString())
-                                    );
-                                    mBillItems.add(billItem);
-                                    dataBaseHelper.insertBill(String.valueOf(billItem.getBill_id()),String.valueOf(billItem.getMitem_amount()),
-                                            billItem.getMitem_desc(),billItem.getMitem_id_label(),String.valueOf(billItem.getMitem_qty()),
-                                            String.valueOf(billItem.getMitem_rate()),billItem.getMitem_unit(),billItem.mshop_Id.toString(),billItem.getMdate(),String.valueOf(billItem.getMcount()),database);
+                                      Log.i("MSG----",snapshot1.getKey());
 
-                                    mBillsRecyclerViewAdapter.notifyItemInserted(i);
-                                    i++;
+                                      DatabaseReference billsref = snapshot1.getRef();
+                                      billsref.addValueEventListener(new ValueEventListener() {
+                                          @Override
+                                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                              Log.i("now",dataSnapshot.getChildrenCount()+"");
+
+                                              int i = 0;
+                                              for(DataSnapshot d2 : dataSnapshot.getChildren()){
+                                                  Log.i("final--------",d2.child("mitem_desc").getValue().toString());
+
+
+                                                    BillItem billItem = new BillItem(d2.child("bill_id").getValue().toString()
+                                                            , d2.child("mitem_desc").getValue().toString()
+                                                            , d2.child("mitem_unit").getValue().toString()
+                                                            , Double.parseDouble(d2.child("mitem_qty").getValue().toString())
+                                                            , Double.parseDouble(d2.child("mitem_rate").getValue().toString())
+                                                            , Double.parseDouble(d2.child("mitem_amount").getValue().toString())
+                                                            , Long.parseLong(d2.child("mShopId").getValue().toString())
+                                                            , d2.child("mDate").getValue().toString()
+                                                            ,Integer.parseInt(d2.child("mCount").getValue().toString())
+                                                    );
+
+
+                                                mBillItems.add(billItem);
+                                                dataBaseHelper.insertBill(String.valueOf(billItem.getBill_id()),String.valueOf(billItem.getMitem_amount()),
+                                                        billItem.getMitem_desc(),billItem.getMitem_id_label(),String.valueOf(billItem.getMitem_qty()),
+                                                        String.valueOf(billItem.getMitem_rate()),billItem.getMitem_unit(),billItem.mshop_Id.toString(),billItem.getMdate(),String.valueOf(billItem.getMcount()),database);
+
+                                                mBillsRecyclerViewAdapter.notifyItemInserted(i);
+                                                i++;
+
+
+
+                                              }
+
+                                          }
+
+                                          @Override
+                                          public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                          }
+                                      });
+
+
                                 }
 
                             }
@@ -1164,7 +1172,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
                             }
                         });
-                        mBillsRecyclerViewAdapter.notifyDataSetChanged();
+
                     }
 
 
@@ -1235,7 +1243,6 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             return null;
         }
     }
-
 
 
 }
