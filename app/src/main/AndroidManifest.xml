@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotificationsActivity"></activity>
+        <activity android:name=".RegisteredUsersActivity"></activity>
+        <activity android:name=".UtilitiesActivity" />
+        <activity android:name=".NotificationsActivity" />
         <activity android:name=".ShopItemsActivity" />
         <activity android:name=".ShopsActivity" />
         <activity android:name=".LoginActivity" />

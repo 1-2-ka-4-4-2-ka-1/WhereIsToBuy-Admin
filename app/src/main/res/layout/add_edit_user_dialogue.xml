@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:padding="5dp"
+    app:cardCornerRadius="20dp">
 
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="369dp"
+        android:layout_height="390dp">
+
+
+        <EditText
+            android:id="@+id/ed_new_user_password"
+            android:layout_width="290dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="51dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="72dp"
+            android:background="@drawable/grey_edittext_layout"
+            android:ems="10"
+            android:inputType="textPersonName|numberDecimal"
+            android:maxLines="1"
+            android:paddingLeft="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_cancel_dialogue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="165dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="16dp"
+            android:text="User Id"
+            app:layout_constraintBottom_toTopOf="@+id/ed_new_user_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="165dp"
+            android:layout_marginEnd="141dp"
+            android:layout_marginBottom="20dp"
+            android:text="Password"
+            app:layout_constraintBottom_toTopOf="@+id/ed_new_user_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/ed_new_user_id"
+            android:layout_width="290dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="51dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="46dp"
+            android:background="@drawable/grey_edittext_layout"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:maxLines="2"
+            android:paddingLeft="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_ok_dialogue"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="101dp"
+            android:layout_marginEnd="63dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/button_layout_light"
+            android:text="@android:string/ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/btn_cancel_dialogue" />
+
+        <Button
+            android:id="@+id/btn_cancel_dialogue"
+            android:layout_width="63dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/button_layout_light"
+            android:padding="2dp"
+            android:text="@android:string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,58 +1,21 @@
 {
   "project_info": {
-    "project_number": "724283362568",
-    "firebase_url": "https://reena-ece30.firebaseio.com",
-    "project_id": "reena-ece30",
-    "storage_bucket": "reena-ece30.appspot.com"
+    "project_number": "973364199273",
+    "firebase_url": "https://reena-93244.firebaseio.com",
+    "project_id": "reena-93244",
+    "storage_bucket": "reena-93244.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:724283362568:android:14661cbe2971aadb21f0bd",
-        "android_client_info": {
-          "package_name": "com.findViewById.tiwari.myapplication"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "724283362568-9rc23f8ia9k9qigatpg7gleqahlctubg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.findViewById.tiwari.myapplication",
-            "certificate_hash": "fb117437549343647cf012eda32baf1aeb5792c6"
-          }
-        },
-        {
-          "client_id": "724283362568-8jefnh5ees7o9bbh29hftlfrgbabupnd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBJCZVEnSowj9GGn09hGojBZou6R1t7LJQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "724283362568-8jefnh5ees7o9bbh29hftlfrgbabupnd.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:724283362568:android:f2ecb7ef1bfbf0d021f0bd",
+        "mobilesdk_app_id": "1:973364199273:android:84f69c925fca871bb9c7f8",
         "android_client_info": {
           "package_name": "com.findviewbyid.tiwari.radmin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "724283362568-75i6vo2h34r7kd8ngbl6a45qgqh3vbj3.apps.googleusercontent.com",
+          "client_id": "973364199273-k0b9fjdmor0h5i24die5s2e93gohei4b.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.findviewbyid.tiwari.radmin",
@@ -60,20 +23,20 @@
           }
         },
         {
-          "client_id": "724283362568-8jefnh5ees7o9bbh29hftlfrgbabupnd.apps.googleusercontent.com",
+          "client_id": "973364199273-imt7ctl3b6jjvfjo14f8k4b21b09l69s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBJCZVEnSowj9GGn09hGojBZou6R1t7LJQ"
+          "current_key": "AIzaSyD6CSUMd3H_LRRfubCQpZ8IixdkcfRU3J4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "724283362568-8jefnh5ees7o9bbh29hftlfrgbabupnd.apps.googleusercontent.com",
+              "client_id": "973364199273-imt7ctl3b6jjvfjo14f8k4b21b09l69s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -22,6 +22,7 @@ public class DashBoardActivity extends AppCompatActivity {
     private ImageView mShopsActivityButton;
     private ImageView mItemsActivityButton;
     private ImageView mBillsActivityButton;
+    private ImageView mUtilitiesActivityButton;
     private ImageView mNotification;
 
 
@@ -65,6 +66,16 @@ public class DashBoardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mUtilitiesActivityButton = findViewById(R.id.iv_utils_avtivity);
+        mUtilitiesActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashBoardActivity.this,UtilitiesActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mNotification = findViewById(R.id.iv_notification_icon);
         mNotification.setOnClickListener(new View.OnClickListener() {
             @Override

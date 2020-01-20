@@ -24,6 +24,8 @@ public class ShopItemsActivity extends AppCompatActivity implements AddEditDialo
 
 
     private FirebaseDatabase databaseFirebase;
+    private DatabaseReference dataReference ;
+    private DatabaseReference  notificationRef;
 
     private RecyclerView mItemsListRecyclerView;
     private ShopItemsRecyclerViewAdapter mItemsRecyclerViewAdapter;
@@ -74,6 +76,9 @@ public class ShopItemsActivity extends AppCompatActivity implements AddEditDialo
                 doAddItem();
             }
         });
+
+
+
 
 
         doLoadItems();
@@ -168,6 +173,8 @@ public class ShopItemsActivity extends AppCompatActivity implements AddEditDialo
         ShopItemsStorageClass storage = new ShopItemsStorageClass(getApplicationContext());
         storage.addNewShop(shopItemModel);
 
+        doSendNotification(desc);
+
     }
     @Override
     public void getModifiedData(String desc, String unit, String rate, int pos) {
@@ -182,7 +189,15 @@ public class ShopItemsActivity extends AppCompatActivity implements AddEditDialo
     }
 
 
+    public void doSendNotification(final String desc){
 
+        dataReference = databaseFirebase.getReference("data");
+        notificationRef = dataReference.child("salesmen_1").child("notifications").getRef();
+
+        notificationRef.push().setValue("New item added"+desc);
+
+
+    }
 
     public class  LodeItemsDataAsyncTask extends AsyncTask<Void , Void , Void> {
 
