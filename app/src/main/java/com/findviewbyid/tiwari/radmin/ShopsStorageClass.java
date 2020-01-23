@@ -79,7 +79,6 @@ public class ShopsStorageClass {
         return null;
     }
 
-
     public void clearCachedShops() {
         preferences = context.getSharedPreferences(STORAGE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SendNoteActivity">
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="107dp"
+        android:gravity="center"
+        android:text="Send Note"
+        android:textColor="#1976D2"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/ed_note_send"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/ed_note_send"
+        android:layout_width="321dp"
+        android:layout_height="272dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/blue_edittext_layout"
+        android:ems="10"
+        android:gravity="top"
+        android:inputType="textPersonName"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#636262"
+        app:layout_constraintBottom_toTopOf="@+id/textView22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_send_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="106dp"
+        android:background="@drawable/blue_button_layout"
+        android:text="Send"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spnr_select_user"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="46dp"
+        android:background="@drawable/spinner_layout"
+        android:spinnerMode="dialog"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/btn_send_note"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="197dp"
+        android:layout_marginEnd="197dp"
+        android:layout_marginBottom="15dp"
+        android:text="To"
+        app:layout_constraintBottom_toTopOf="@+id/spnr_select_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

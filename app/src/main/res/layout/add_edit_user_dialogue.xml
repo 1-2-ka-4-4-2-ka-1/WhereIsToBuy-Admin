@@ -23,7 +23,7 @@
             android:layout_marginBottom="72dp"
             android:background="@drawable/grey_edittext_layout"
             android:ems="10"
-            android:inputType="textPersonName|numberDecimal"
+            android:inputType="textPersonName"
             android:maxLines="1"
             android:paddingLeft="10dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_cancel_dialogue"
