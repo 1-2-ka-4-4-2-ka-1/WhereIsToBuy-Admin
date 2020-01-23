@@ -1078,7 +1078,6 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
                 Toast.makeText(MainActivity.this, "some thing went wrong", Toast.LENGTH_LONG).show();
             }
 
-
         }
 
         @Override
