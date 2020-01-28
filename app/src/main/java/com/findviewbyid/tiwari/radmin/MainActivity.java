@@ -216,14 +216,10 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             @Override
             public void onClick(View v) {
 
-                doExportData(MainActivity.this , System.currentTimeMillis()+".xls");
+                Date date = new Date();
+                doExportData(MainActivity.this , date+"__"+System.currentTimeMillis()+".xls");
             }
         });
-
-
-
-
-
 
 //        mFilterOnDateAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,mSpinnerList);
 //        mFilterOnDateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -535,8 +531,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
 
 
-        query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B WHERE B._desc LIKE (?)  AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
-        cursor = database.rawQuery(query, new String[]{"%%","%%","%%","%%"});
+        query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B ";
+        cursor = database.rawQuery(query, new String[]{});
         if (cursor != null) {
 
             if (cursor.moveToFirst()) {
@@ -581,9 +577,10 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         Cell c = null;
 
         //Cell style for header row
+
         CellStyle cs = wb.createCellStyle();
-        cs.setFillForegroundColor(HSSFColor.LIGHT_BLUE.index);
-        cs.setFillPattern(HSSFCellStyle.ALIGN_CENTER);
+        cs.setFillForegroundColor(HSSFColor.SKY_BLUE.index);
+        cs.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
 
         //New Sheet
         Sheet sheet1 = null;
@@ -592,17 +589,22 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         // Generate column headings
 
             Row row = sheet1.createRow(0);
+            row.setHeight((short)500);
+
+//        c = row.createCell(0);
+//        c.setCellValue("S.No");
+//        c.setCellStyle(cs);
 
         c = row.createCell(0);
-        c.setCellValue("S.No");
+        c.setCellValue("Qty");
         c.setCellStyle(cs);
 
         c = row.createCell(1);
-        c.setCellValue("Desc ");
+        c.setCellValue("Unit");
         c.setCellStyle(cs);
 
         c = row.createCell(2);
-        c.setCellValue("Qty");
+        c.setCellValue("Desc ");
         c.setCellStyle(cs);
 
         c = row.createCell(3);
@@ -610,64 +612,139 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         c.setCellStyle(cs);
 
         c = row.createCell(4);
-        c.setCellValue("Unit");
-        c.setCellStyle(cs);
-
-        c = row.createCell(5);
         c.setCellValue("Amount");
         c.setCellStyle(cs);
 
+        c = row.createCell(5);
+        c.setCellValue("");
+        c.setCellStyle(cs);
+
+        c = row.createCell(6);
+        c.setCellValue("Shop Nmae");
+        c.setCellStyle(cs);
+
+        c = row.createCell(7);
+        c.setCellValue("Alias Name");
+        c.setCellStyle(cs);
+
+        c = row.createCell(8);
+        c.setCellValue("Date");
+        c.setCellStyle(cs);
 
         CellStyle cse = wb.createCellStyle();
         cse.setFillForegroundColor(HSSFColor.AQUA.index);
 
 
-        CellStyle cs0 = wb.createCellStyle();
-        cs0.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
 
+        CellStyle cs2;
+        CellStyle cs3;
+        cs3 = wb.createCellStyle();
+        cs3.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
+        cs3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+        ShopsStorageClass storage = new ShopsStorageClass(getApplicationContext());
+
+        double amount= 0;
 
         for(int i=0;i<mBillItems.size();i++) {
 
-            Row row2 = sheet1.createRow(1+i);
 
+            if(i%2==0){
+                 cs2 = wb.createCellStyle();
+                cs2.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+                cs2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            }else {
+                 cs2 = wb.createCellStyle();
+                cs2.setFillForegroundColor(HSSFColor.GREY_50_PERCENT.index);
+                cs2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+            }
+
+            Row row2 = sheet1.createRow(1+i);
+            row2.setHeight((short)400);
+
+//            c = row2.createCell(0);
+//            c.setCellValue(String.valueOf(i+1));
+//            c.setCellStyle(cs2);
 
             c = row2.createCell(0);
-            c.setCellValue(i);
-            c.setCellStyle(cs0);
+            c.setCellValue(String.valueOf(mBillItems.get(i).getMitem_qty()));
+            c.setCellStyle(cs2);
+
 
             c = row2.createCell(1);
-            c.setCellValue(mBillItems.get(i).getMitem_desc());
-            c.setCellStyle(cs0);
+            c.setCellValue(mBillItems.get(i).getMitem_unit());
+            c.setCellStyle(cs2);
 
 
             c = row2.createCell(2);
-            c.setCellValue(mBillItems.get(i).getMitem_rate());
-            c.setCellStyle(cs0);
-
+            c.setCellValue(mBillItems.get(i).getMitem_desc());
+            c.setCellStyle(cs2);
 
 
             c = row2.createCell(3);
-            c.setCellValue(mBillItems.get(i).getMitem_qty());
-            c.setCellStyle(cs0);
-
+            c.setCellValue(String.valueOf(mBillItems.get(i).getMitem_rate()));
+            c.setCellStyle(cs2);
 
             c = row2.createCell(4);
-            c.setCellValue(mBillItems.get(i).getMitem_unit());
-            c.setCellStyle(cs0);
+            c.setCellValue(String.valueOf(mBillItems.get(i).getMitem_amount()));
+            c.setCellStyle(cs2);
+
+
+
+            ShopDetailsModel shop =storage.getShopById(String.valueOf(mBillItems.get(i).getMshop_Id()));
+
 
             c = row2.createCell(5);
-            c.setCellValue(mBillItems.get(i).getMitem_amount());
-            c.setCellStyle(cs0);
+            c.setCellStyle(cs3);
 
+            c = row2.createCell(6);
+            c.setCellValue(shop.getmShopName());
+            c.setCellStyle(cs2);
+
+            c = row2.createCell(7);
+            c.setCellValue(shop.getmAliasName());
+            c.setCellStyle(cs2);
+
+            c = row2.createCell(8);
+            c.setCellValue(mBillItems.get(i).getMdate());
+            c.setCellStyle(cs2);
+
+            amount+= mBillItems.get(i).getMitem_amount();
 
         }
 
-        sheet1.setColumnWidth(0, (15 * 100));
-        sheet1.setColumnWidth(1, (15 * 500));
-        sheet1.setColumnWidth(2, (15 * 200));
+
+        CellStyle cs4;
+        cs4 = wb.createCellStyle();
+        cs4.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
+        cs4.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+
+        Row row3 = sheet1.createRow(mBillItems.size()+2);
+        row3.setHeight((short)400);
+
+        c = row3.createCell(4);
+        c.setCellValue("Total");
+        c.setCellStyle(cs);
+
+        Row row4 = sheet1.createRow(mBillItems.size()+3);
+        row4.setHeight((short)400);
+
+        c = row4.createCell(4);
+        c.setCellValue((String.valueOf(amount)));
+        c.setCellStyle(cs4);
+
+        sheet1.setColumnWidth(0, (15 * 200));
+        sheet1.setColumnWidth(1, (15 * 200));
+        sheet1.setColumnWidth(2, (15 * 500));
+
         sheet1.setColumnWidth(3, (15 * 200));
         sheet1.setColumnWidth(4, (15 * 200));
-        sheet1.setColumnWidth(5, (15 * 200));
+        sheet1.setColumnWidth(5, (15 * 100));
+        sheet1.setColumnWidth(6, (15 * 500));
+        sheet1.setColumnWidth(7, (15 * 500));
+        sheet1.setColumnWidth(8, (15 * 250));
+        sheet1.setColumnWidth(9, (15 * 200));
+
 
         // Create a path where we will place our List of objects on external storage
         File file = new File(context.getExternalFilesDir(null), fileName);
@@ -852,8 +929,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
         boolean date_selectd = false;
 
-        String query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B WHERE B._desc LIKE (?)  AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
-        Cursor cursor = database.rawQuery(query, new String[]{desc,shop,area,group});
+        String query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B ";
+        Cursor cursor = database.rawQuery(query, new String[]{});
 
         if(!mFilterOnDate.getText().toString().equals("00/00/00")){
             Log.i("now executed-------",mFilterOnDate.getText().toString());
@@ -894,16 +971,16 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
       // date_selectd = false;
 
-        if(desc.equals("%%") && !date_selectd ){
-             query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label  FROM  _all_bills_tb B WHERE  B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
-             cursor = database.rawQuery(query, new String[]{shop,area,group});
+        if(!desc.equals("%%") && !date_selectd ){
+             query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label  FROM  _all_bills_tb B WHERE  B._desc LIKE  (?) ";
+             cursor = database.rawQuery(query, new String[]{desc});
         }
 
 
 //        String query = "SELECT B._bill_id ,B._amount  , B._desc , B._id_label  , B._qty , B._rate , B._unit ,_count , B._date , B._shop_id FROM  _all_bills_tb B WHERE B._desc LIKE (?) AND B._date <(?) AND B._shop_id LIKE (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name LIKE (?)  AND _area LIKE (?) AND  _group LIKE (?) )";
 //        Cursor cursor = database.rawQuery(query, new String[]{desc,parseDateToddMMyyyy("02/01/20"),shop,area,group});
         mBillItems.clear();
-       // mBillsRecyclerViewAdapter.notifyDataSetChanged();
+        mBillsRecyclerViewAdapter.notifyDataSetChanged();
 
         Log.i("data-----",query);
         if (cursor != null) {
@@ -1108,11 +1185,11 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
                                              } else {
                                                  Log.i("changed", bill.getValue().toString());
-                                                 BillItem billItem = new BillItem(bill.child("bill_id").getValue().toString()
+                                                 BillItem billItem = new BillItem(bill.child("mitem_id_label").getValue().toString()
                                                          , bill.child("mitem_desc").getValue().toString()
                                                          , bill.child("mitem_unit").getValue().toString()
-                                                         , Double.parseDouble(bill.child("mitem_qty").getValue().toString())
                                                          , Double.parseDouble(bill.child("mitem_rate").getValue().toString())
+                                                         , Double.parseDouble(bill.child("mitem_qty").getValue().toString())
                                                          , Double.parseDouble(bill.child("mitem_amount").getValue().toString())
                                                          , Long.parseLong(bill.child("mShopId").getValue().toString())
                                                          , bill.child("mDate").getValue().toString()

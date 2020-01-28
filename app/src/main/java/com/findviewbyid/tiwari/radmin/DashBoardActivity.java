@@ -23,6 +23,7 @@ public class DashBoardActivity extends AppCompatActivity {
     private ImageView mItemsActivityButton;
     private ImageView mBillsActivityButton;
     private ImageView mUtilitiesActivityButton;
+    private  ImageView mBillsPreviewButton;
     private ImageView mNotification;
 
 
@@ -75,6 +76,16 @@ public class DashBoardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mBillsPreviewButton = findViewById(R.id.bills_preview_button);
+        mBillsPreviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DashBoardActivity.this, PreviewBillsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         mNotification = findViewById(R.id.iv_notification_icon);
         mNotification.setOnClickListener(new View.OnClickListener() {

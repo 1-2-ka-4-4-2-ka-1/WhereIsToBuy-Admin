@@ -106,13 +106,13 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
 
 
         DatabaseReference mDataRef = databaseFirebase.getReference("data");
-        mDataRef.addValueEventListener(new ValueEventListener() {
+        mDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
                     DatabaseReference mShopsRef = snapshot.child("shops").getRef();
-                    mShopsRef.addValueEventListener(new ValueEventListener() {
+                    mShopsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
@@ -139,6 +139,7 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
                                 mShopsRecyclerViewAdapter.notifyDataSetChanged();
                             }
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 

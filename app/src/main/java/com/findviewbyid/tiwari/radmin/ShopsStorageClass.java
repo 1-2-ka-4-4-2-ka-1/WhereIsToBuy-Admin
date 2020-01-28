@@ -56,7 +56,7 @@ public class ShopsStorageClass {
     }
 
 
-    public ShopDetailsModel getShopByDesc(String desc){
+    public ShopDetailsModel getShopById(String id){
 
         ArrayList<ShopDetailsModel> s = new ArrayList<>();
         s.addAll(loadShops());
@@ -70,7 +70,7 @@ public class ShopsStorageClass {
 
         for(int i=0;i<s.size();i++){
 
-            if(s.get(i).getmShopName().equals(desc)){
+            if(s.get(i).getmShopId().equals(id)){
                 ShopDetailsModel shopDetailsModel = s.get(i);
                 return shopDetailsModel;
             }

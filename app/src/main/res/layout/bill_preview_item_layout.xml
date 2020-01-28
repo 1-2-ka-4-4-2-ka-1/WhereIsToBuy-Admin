@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp">
+
+    <TextView
+        android:id="@+id/tv_check_bill_id"
+        android:layout_width="110dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:text="9035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_check_name"
+        android:layout_width="310dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="2dp"
+        android:padding="10dp"
+        android:text="Preetam Kumar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_check_bill_id" />
+
+    <TextView
+        android:id="@+id/tv_check_bills_count"
+        android:layout_width="58dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="2dp"
+        android:gravity="center"
+        android:text="5"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_check_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_check_date" />
+
+    <TextView
+        android:id="@+id/tv_check_date"
+        android:layout_width="110dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="5dp"
+        android:gravity="right"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:text="02/19/20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

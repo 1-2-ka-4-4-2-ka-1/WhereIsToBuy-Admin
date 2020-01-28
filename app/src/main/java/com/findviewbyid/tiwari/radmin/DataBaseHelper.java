@@ -122,7 +122,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return str;
     }
 
-
     public void clearBills(SQLiteDatabase database){
 
         database.execSQL("delete from "+ "_all_bills_tb");
