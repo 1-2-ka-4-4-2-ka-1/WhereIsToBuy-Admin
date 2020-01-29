@@ -270,7 +270,6 @@ public class PreviewBillsActivity extends AppCompatActivity {
                                         }
                                     });
 
-
                                 }
                             }
 

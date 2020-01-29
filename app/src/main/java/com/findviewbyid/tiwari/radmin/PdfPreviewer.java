@@ -20,7 +20,7 @@ public class PdfPreviewer extends AppCompatActivity {
 
         String path =this.getFilesDir().toString();
         //  String path = Environment.getExternalStorageDirectory().getAbsolutePath().toString();
-        File file = new File(path + "/fileName.pdf");
+        File file = new File(getIntent().getStringExtra("filename"));
 
         pdfView.fromFile((file))
                 .load();

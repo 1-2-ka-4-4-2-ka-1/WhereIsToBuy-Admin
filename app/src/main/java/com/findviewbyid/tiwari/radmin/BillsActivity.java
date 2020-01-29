@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -315,7 +316,7 @@ public class BillsActivity extends AppCompatActivity {
 
         }
 
-        paint.setTextSize(15);
+        paint.setTextSize(12);
         canvas.drawText(Double.toString(total), 390-50, 595-20, paint);
 
 
@@ -329,7 +330,7 @@ public class BillsActivity extends AppCompatActivity {
 
 
         paint.setStrokeWidth(0.4f);
-        canvas.drawLine(10, 595-2, 411, 595-2, paint);
+        //canvas.drawLine(10, 595-2, 411, 595-2, paint);
 
 
         // finish the page
@@ -405,7 +406,7 @@ public class BillsActivity extends AppCompatActivity {
 
             }
 
-            paint.setTextSize(15);
+            paint.setTextSize(12);
             canvas.drawText(Double.toString(total), 390-50, 595-20, paint);
 
 
@@ -419,7 +420,7 @@ public class BillsActivity extends AppCompatActivity {
 
 
             paint.setStrokeWidth(0.4f);
-            canvas.drawLine(10, 595-2, 411, 595-2, paint);
+           // canvas.drawLine(10, 595-2, 411, 595-2, paint);
 
 
             // finish the page
@@ -431,13 +432,13 @@ public class BillsActivity extends AppCompatActivity {
 
         // write the document content
         //String targetPdf = Environment.getExternalStorageDirectory().getAbsolutePath() + "/fileName.pdf";
-        String targetPdf =this.getFilesDir() + "/fileName.pdf";
-        File filePath = new File(targetPdf);
+       // String targetPdf =this.getFilesDir() + "/fileName.pdf";
+        String fileName = id +"_"+date+"_file.pdf";
+        File filePath = new File(BillsActivity.this.getExternalFilesDir(null), fileName);
 
         try {
             document.writeTo(new FileOutputStream(filePath));
-            Toast.makeText(this, "Done" + targetPdf, Toast.LENGTH_LONG).show();
-
+            Toast.makeText(this, "Saved_"+mBillItems.get(0).getBill_id() + fileName, Toast.LENGTH_LONG).show();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -456,8 +457,25 @@ public class BillsActivity extends AppCompatActivity {
 
     public void showPdf(){
 
+        String fileName = id +"_"+date+"_file.pdf";
+
+
         Intent display = new Intent(BillsActivity.this,PdfPreviewer.class);
+        display.putExtra("filename",BillsActivity.this.getExternalFilesDir(null)+ "/"+fileName);
         startActivity(display);
+
+
+        File file = new File(BillsActivity.this.getExternalFilesDir(null), fileName);
+
+
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        Uri uri = GenericFileProvider.getUriForFile(BillsActivity.this,getApplicationContext().getPackageName()+".provider",file);
+        intent.setDataAndType(uri,"application/pdf");
+        intent.putExtra(intent.EXTRA_STREAM,uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
 
     }
 
