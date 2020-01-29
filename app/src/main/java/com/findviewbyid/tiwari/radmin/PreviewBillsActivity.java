@@ -172,10 +172,14 @@ public class PreviewBillsActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                dataBaseHelper.deleteBillsHavingId(mMappedItems.get(viewHolder.getAdapterPosition()).getmBillId(),database);
+                                dataBaseHelper.deleteMappingHavingId(mMappedItems.get(viewHolder.getAdapterPosition()).getmBillId(),database);
                                 mMappedItems.remove(viewHolder.getAdapterPosition());
                                 previewBillsRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                                 Toast.makeText(getApplicationContext(), "removed", Toast.LENGTH_LONG).show();
                                 //remove from database
+
+
                             }
 
                         })
@@ -193,8 +197,8 @@ public class PreviewBillsActivity extends AppCompatActivity {
 
 
 
-        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
-        lodeItemsDataAsyncTask.execute();
+//        LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new LoadeBillsDataAsyncTask();
+//        lodeItemsDataAsyncTask.execute();
 
 
     }

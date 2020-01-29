@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BillsActivity"></activity>
+        <activity android:name=".EditBillActivity"></activity>
+        <activity android:name=".BillsActivity" />
         <activity android:name=".PreviewBillsActivity" />
         <activity android:name=".SendNoteActivity" />
         <activity android:name=".RegisteredUsersActivity" />

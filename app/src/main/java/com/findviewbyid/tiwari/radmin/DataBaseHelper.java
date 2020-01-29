@@ -128,6 +128,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+    public void deleteBillsHavingId(int id, SQLiteDatabase database){
+
+        database.execSQL("delete from "+ "_all_bills_tb where _id_label ="+id);
+    }
+
+    public void deleteMappingHavingId(int id, SQLiteDatabase database){
+
+        database.execSQL("delete from "+ "_mapping_tb where _mbill_id ="+id);
+    }
+
+    public void updateBill(BillItem billItem,BillItem prevBill,int id, SQLiteDatabase database){
+        ContentValues bill=new ContentValues();
+
+        bill.put("_amount",billItem.getMitem_amount());
+        bill.put("_desc",billItem.getMitem_desc());
+        bill.put("_qty",billItem.getMitem_qty());
+        bill.put("_rate",billItem.getMitem_rate());
+
+
+        database.update(_all_bills_tb,bill,"_id_label =(?) AND _desc=(?) AND _qty=(?)  ",new String[]{String.valueOf(id),prevBill.getMitem_desc(),String.valueOf(prevBill.getMitem_qty())});
+    }
+
+
+
     public void clearShops(SQLiteDatabase database){
 
         database.execSQL("delete from "+ "_all_shops_tb");
