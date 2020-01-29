@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditBillActivity"></activity>
+        <activity android:name=".PdfPreviewer"></activity>
+        <activity android:name=".EditBillActivity" />
         <activity android:name=".BillsActivity" />
         <activity android:name=".PreviewBillsActivity" />
         <activity android:name=".SendNoteActivity" />

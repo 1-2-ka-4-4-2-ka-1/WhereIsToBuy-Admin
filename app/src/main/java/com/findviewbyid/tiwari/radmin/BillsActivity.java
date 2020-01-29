@@ -3,6 +3,11 @@ package com.findviewbyid.tiwari.radmin;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BillsActivity extends AppCompatActivity {
@@ -46,6 +54,11 @@ public class BillsActivity extends AppCompatActivity {
     public static final int EDIT_NOTE_REQUEST = 2;
     private int pos=0;
 
+
+
+    private Paint paint;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +79,8 @@ public class BillsActivity extends AppCompatActivity {
         mSharePdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+           proceedToBillPreview();
 
             }
         });
@@ -139,6 +154,312 @@ public class BillsActivity extends AppCompatActivity {
 
 
 
+    public void drawOncancvas(Canvas canvas){
+        // canvas.drawColor(Color.RED);
+        paint = new Paint();
+        paint.setColor(Color.BLACK);
+
+
+        canvas.drawText("Shop:", 100-50, 90-30, paint);
+
+        ShopsStorageClass shopsStorageClass = new ShopsStorageClass(BillsActivity.this);
+        ShopDetailsModel shop= shopsStorageClass.getShopById(Long.toString(mBillItems.get(0).getMshop_Id()));
+        paint.setTextSize(8);
+        String shopDetail = shop.getmShopName()+"  "+shop.getmAddress()+"  "+shop.getmArea()+"  "+shop.getmLandmark()+"  "+shop.getmContactno()+"123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122";
+        Log.i("length is ---",shopDetail.length()+"");
+
+
+        String l1="";
+        String l2="";
+
+        int len = shopDetail.length();
+        if(len>64)
+        {
+            l1= shopDetail.substring(0,63);
+            l2= shopDetail.substring(l1.length(),len);
+
+        }else {
+            l1= shopDetail;
+            l2="";
+        }
+
+        if(l2.length()>65){
+            l2 = l2.substring(0,65);
+            l2+="....";
+        }
+
+        canvas.drawText(l1, 100-10, 90-30, paint);
+        canvas.drawText(l2, 100-40, 130-45, paint);
+
+
+        paint.setStrokeWidth(0.4f);
+        paint.setTextSize(10);
+        canvas.drawLine(100-50, 100-30, 450-50, 100-30, paint);
+        canvas.drawLine(100-50, 130-40, 450-50, 130-40, paint);
+        canvas.drawText(mBillItems.get(0).mdate, 490-140, 70-50, paint);
+
+        paint.setColor(Color.rgb(12, 108, 138));
+
+        paint.setTextSize(8);
+        paint.setTypeface(Typeface.SANS_SERIF);
+        canvas.drawText("Rough Estimate", 170, 15, paint);
+        paint.setTextSize(25);
+        canvas.drawText("REENA", 165, 35, paint);
+
+
+        paint.setStrokeWidth(1);
+        paint.setTextSize(10);
+        paint.setColor(Color.BLACK);
+
+        canvas.drawText("Qty", 90 + 3-50, 170-50, paint);
+        canvas.drawText("Unit", 120 + 10-50, 170-50, paint);
+        canvas.drawText("Desc of good", 155 + 40-50, 170-50, paint);
+        canvas.drawText("Rate", 335 + 5-50, 170-50, paint);
+        canvas.drawText("Amount", 400-50, 170-50, paint);
+
+
+        //canvas.drawLine(90,160,90,750,paint);
+//        canvas.drawLine(90-50, 190-50, 90-50, 595-80, paint);
+//        canvas.drawLine(120-50, 190-50, 120-50, 595-80, paint);
+//        canvas.drawLine(165-50, 190-50, 165-50, 595-80, paint);
+//        canvas.drawLine(325-50, 190-50, 325-50-10, 595-80, paint);
+//        canvas.drawLine(390-50-10, 190-50, 390-50-10, 595-80, paint);
+//        canvas.drawLine(460-50-10, 190-50, 460-50-10, 595-80, paint);
+
+
+        canvas.drawText("Note:", 80-50, 595-60, paint);
+        canvas.drawText("Total", 390-50, 595-50, paint);
+    }
+
+
+
+    public void proceedToBillPreview() {
+// create a new document
+        PdfDocument document = new PdfDocument();
+
+        // crate a page description
+        PdfDocument.PageInfo pageInfo =
+                new PdfDocument.PageInfo.Builder(421, 595, 1).create();
+        // start a page
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+
+        drawOncancvas(canvas);
+
+
+        paint.setTextSize(8);
+        int j = 25;
+
+        int total = 0;
+
+
+
+        int max = 17;
+        Paint p = new Paint();
+        p.setColor(Color.WHITE);
+
+        int o=25;
+        int count =  mBillItems.size();
+
+        if(count>17)
+            count = 17;
+
+        for (int i = 0; i < count; i++) {
+
+            BillItem item = mBillItems.get(i);
+
+            if(i%2==0)
+            {
+                p.setColor(Color.parseColor("#f0fcfc"));
+            }else p.setColor(Color.parseColor("#e8e8e8"));
+
+            canvas.drawRect(30,170 + o-50,405,170 +o-50+25,p);
+
+
+
+            o+=22;
+
+            String desc = item.getMitem_desc();
+            j = j + 10;
+            canvas.drawText((Integer.toString((int)item.getMitem_qty())), 90 + 10-50, 170 + j-50, paint);
+            canvas.drawText(item.getMitem_unit(), 120 + 15-50, 170 + j-50,paint);
+            canvas.drawText(String.valueOf((int)item.getMitem_rate()), 325 + 5-50, 170 + j-50, paint);
+            canvas.drawText(String.valueOf(item.getMitem_amount()), 400-50, 170 + j-50, paint);
+
+            total += item.getMitem_amount();
+
+            int m = 0;
+            int n = 0;
+            if (desc.length() - m < 25) {
+                n = desc.length();
+                // j+=10;
+            } else {
+                n = 25;
+                max = 15;
+            }
+            for (int k = 0; k <= desc.length() / 25; k++) {
+                canvas.drawText(desc.substring(m, n), 135 + 40-50, 170 + j-50, paint);
+                m = n;
+                if (desc.length() - m < 25) {
+                    n = desc.length();
+                } else {
+
+                    n = 25;
+                    j += 12;
+
+                }
+
+                j += 12;
+            }
+
+        }
+
+        paint.setTextSize(15);
+        canvas.drawText(Double.toString(total), 390-50, 595-20, paint);
+
+
+        canvas.drawLine(90-50, 190-50, 90-50, 595-80+5, paint);
+        canvas.drawLine(120-50, 190-50, 120-50, 595-80+5, paint);
+        canvas.drawLine(165-50, 190-50, 165-50, 595-80+5, paint);
+        canvas.drawLine(325-50-10, 190-50, 325-50-10, 595-80+5, paint);
+        canvas.drawLine(390-50-10, 190-50, 390-50-10, 595-80+5, paint);
+        canvas.drawLine(460-50-10, 190-50, 460-50-10, 595-80+5, paint);
+
+
+
+        paint.setStrokeWidth(0.4f);
+        canvas.drawLine(10, 595-2, 411, 595-2, paint);
+
+
+        // finish the page
+        document.finishPage(page);
+
+
+
+        if(mBillItems.size()>17)
+        {
+            pageInfo = new PdfDocument.PageInfo.Builder(421, 595, 1).create();
+            page = document.startPage(pageInfo);
+            canvas = page.getCanvas();
+            drawOncancvas(canvas);
+            paint.setTextSize(8);
+             j = 25;
+
+             total = 0;
+
+
+
+             max = 17;
+             p = new Paint();
+            p.setColor(Color.WHITE);
+
+            o=25;
+            for (int i = 17; i < mBillItems.size(); i++) {
+
+                BillItem item = mBillItems.get(i);
+
+                if(i%2==0)
+                {
+                    p.setColor(Color.parseColor("#f0fcfc"));
+                }else p.setColor(Color.parseColor("#e8e8e8"));
+
+                canvas.drawRect(30,170 + o-50,405,170 +o-50+25,p);
+
+
+
+                o+=22;
+
+                String desc = item.getMitem_desc();
+                j = j + 10;
+                canvas.drawText((Integer.toString((int)item.getMitem_qty())), 90 + 10-50, 170 + j-50, paint);
+                canvas.drawText(item.getMitem_unit(), 120 + 15-50, 170 + j-50,paint);
+                canvas.drawText(String.valueOf((int)item.getMitem_rate()), 325 + 5-50, 170 + j-50, paint);
+                canvas.drawText(String.valueOf(item.getMitem_amount()), 400-50, 170 + j-50, paint);
+
+                total += item.getMitem_amount();
+
+                int m = 0;
+                int n = 0;
+                if (desc.length() - m < 25) {
+                    n = desc.length();
+                    // j+=10;
+                } else {
+                    n = 25;
+                    max = 15;
+                }
+                for (int k = 0; k <= desc.length() / 25; k++) {
+                    canvas.drawText(desc.substring(m, n), 135 + 40-50, 170 + j-50, paint);
+                    m = n;
+                    if (desc.length() - m < 25) {
+                        n = desc.length();
+                    } else {
+
+                        n = 25;
+                        j += 12;
+
+                    }
+
+                    j += 12;
+                }
+
+            }
+
+            paint.setTextSize(15);
+            canvas.drawText(Double.toString(total), 390-50, 595-20, paint);
+
+
+            canvas.drawLine(90-50, 190-50, 90-50, 595-80+5, paint);
+            canvas.drawLine(120-50, 190-50, 120-50, 595-80+5, paint);
+            canvas.drawLine(165-50, 190-50, 165-50, 595-80+5, paint);
+            canvas.drawLine(325-50-10, 190-50, 325-50-10, 595-80+5, paint);
+            canvas.drawLine(390-50-10, 190-50, 390-50-10, 595-80+5, paint);
+            canvas.drawLine(460-50-10, 190-50, 460-50-10, 595-80+5, paint);
+
+
+
+            paint.setStrokeWidth(0.4f);
+            canvas.drawLine(10, 595-2, 411, 595-2, paint);
+
+
+            // finish the page
+            document.finishPage(page);
+        }
+
+        // Create Page
+
+
+        // write the document content
+        //String targetPdf = Environment.getExternalStorageDirectory().getAbsolutePath() + "/fileName.pdf";
+        String targetPdf =this.getFilesDir() + "/fileName.pdf";
+        File filePath = new File(targetPdf);
+
+        try {
+            document.writeTo(new FileOutputStream(filePath));
+            Toast.makeText(this, "Done" + targetPdf, Toast.LENGTH_LONG).show();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Something wrong: " + e.toString(),
+                    Toast.LENGTH_LONG).show();
+        }
+
+
+        // close the document
+        document.close();
+        showPdf();
+
+    }
+
+
+
+    public void showPdf(){
+
+        Intent display = new Intent(BillsActivity.this,PdfPreviewer.class);
+        startActivity(display);
+
+    }
 
 
 
@@ -284,7 +605,6 @@ public class BillsActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Not Saved",Toast.LENGTH_LONG).show();
         }
     }
-
 
 
 }

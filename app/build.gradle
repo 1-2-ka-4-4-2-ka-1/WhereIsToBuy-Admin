@@ -48,4 +48,9 @@ dependencies {
 
     implementation files('libs/poi-3.7.jar')
 
+    //pdfViewer
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+
+
+
 }
