@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -145,7 +146,8 @@ public class PreviewBillsActivity extends AppCompatActivity {
 
                 id = mMappedItems.get(position).getmBillId();
                 date= mMappedItems.get(position).getmDate();
-
+                mMappedItems.get(position).setSelected(true);
+                recyclerView.getChildAt(position).setBackgroundColor(Color.CYAN);
                 Intent intent  =new Intent(PreviewBillsActivity.this,BillsActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("date",date);

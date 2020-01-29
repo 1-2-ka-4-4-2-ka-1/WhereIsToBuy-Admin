@@ -73,7 +73,7 @@ public class DashBoardActivity extends AppCompatActivity {
             }
         });
 
-        mBillsActivityButton = findViewById(R.id.iv_billss_activity);
+        mBillsActivityButton = findViewById(R.id.iv_bills_report_activity);
         mBillsActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class DashBoardActivity extends AppCompatActivity {
             }
         });
 
-        mBillsPreviewButton = findViewById(R.id.bills_preview_button);
+        mBillsPreviewButton = findViewById(R.id.iv_bills_preview_button);
         mBillsPreviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

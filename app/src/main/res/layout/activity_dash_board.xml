@@ -35,7 +35,7 @@
         android:layout_height="70dp"
         android:layout_marginEnd="130dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/textView24"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -54,13 +54,13 @@
         android:layout_marginStart="120dp"
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/textView23"
         app:layout_constraintEnd_toStartOf="@+id/cardView5"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/iv_billss_activity"
+            android:id="@+id/iv_bills_report_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="15dp"
@@ -91,7 +91,7 @@
         android:layout_height="70dp"
         android:layout_marginStart="120dp"
         android:layout_marginTop="151dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
@@ -110,7 +110,7 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="151dp"
         android:layout_marginEnd="130dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView4"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -130,7 +130,7 @@
         android:layout_marginStart="145dp"
         android:layout_marginEnd="54dp"
         android:layout_marginBottom="304dp"
-        android:text="Bills"
+        android:text="Reports"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView24"
         app:layout_constraintStart_toStartOf="parent" />
@@ -163,19 +163,35 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView10"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="7dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView32"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24">
 
         <ImageView
-            android:id="@+id/bills_preview_button"
+            android:id="@+id/iv_bills_preview_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="center"
             app:srcCompat="@drawable/ic_create_bill" />
     </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="193dp"
+        android:text="Bills"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView10" />
 
 </android.support.constraint.ConstraintLayout>

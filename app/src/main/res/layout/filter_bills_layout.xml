@@ -93,6 +93,7 @@
         android:spinnerMode="dialog"
         android:text="09"
         android:textColor="#1976D2"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -205,6 +206,7 @@
         android:layout_marginStart="38dp"
         android:layout_marginTop="22dp"
         android:text="In Month"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_filter_on_date" />
 

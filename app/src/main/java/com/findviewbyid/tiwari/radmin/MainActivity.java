@@ -2,8 +2,10 @@ package com.findviewbyid.tiwari.radmin;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -490,15 +492,11 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
        // String query = "SELECT *   FROM   _all_bills_tb  WHERE _shop_id = (SELECT  _shop_id FROM  _all_shops_tb WHERE _shop_name = (?) ) ";
         //String query = "SELECT *   FROM   _all_bills_tb ";
-        String query = "SELECT *   FROM   _all_bills_tb WHERE Date(_date) = Date((?)) ";
-
-        Cursor cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy("01/01/70")});
-
-
+//        String query = "SELECT *   FROM   _all_bills_tb WHERE Date(_date) = Date((?)) ";
 //
-//-: 1--- 511---- 7 ---2020-01-02 ---asm--- 98
-//    2--- 1---- 3 ---2020-01-02 ---new--- 1234
-//
+//        Cursor cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy("01/01/70")});
+
+
 //        String query = "SELECT B._desc ,M._date FROM  _all_bills_tb B,_mapping_tb M WHERE Date(M._date) = date(?)";
 //        Cursor cursor = database.rawQuery(query, new String[]{parseDateToddMMyyyy("17/12/19")});
 
@@ -531,8 +529,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
 
 
-        query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B ";
-        cursor = database.rawQuery(query, new String[]{});
+        String  query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B ";
+        Cursor cursor = database.rawQuery(query, new String[]{});
         if (cursor != null) {
 
             if (cursor.moveToFirst()) {
@@ -747,6 +745,7 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
 
         // Create a path where we will place our List of objects on external storage
+
         File file = new File(context.getExternalFilesDir(null), fileName);
         FileOutputStream os = null;
 
@@ -767,9 +766,26 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
             }
         }
 
+        if(success)
+        doPreviewReport(fileName);
         return success;
     }
 
+
+    public void doPreviewReport(String fileName){
+
+        File file = new File(MainActivity.this.getExternalFilesDir(null), fileName);
+
+
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        Uri uri = GenericFileProvider.getUriForFile(MainActivity.this,getApplicationContext().getPackageName()+".provider",file);
+        intent.setDataAndType(uri,"application/xls");
+        intent.putExtra(intent.EXTRA_STREAM,uri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
+    }
 
     public static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
