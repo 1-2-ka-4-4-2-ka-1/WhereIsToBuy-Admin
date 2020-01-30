@@ -731,6 +731,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
         c.setCellValue((String.valueOf(amount)));
         c.setCellStyle(cs4);
 
+
+
         sheet1.setColumnWidth(0, (15 * 200));
         sheet1.setColumnWidth(1, (15 * 200));
         sheet1.setColumnWidth(2, (15 * 500));
@@ -1419,6 +1421,8 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
                                         snapshot1.child("mDate").getValue().toString(),
                                         snapshot1.child("mName").getValue().toString(),
                                         snapshot1.child("mShopId").getValue().toString(),
+                                        snapshot1.child("mSalesmen").getValue().toString(),
+                                        snapshot1.child("mNote").getValue().toString(),
                                         database
                                         );
                             }

@@ -8,18 +8,36 @@ public class PreviewBillsModel {
    private int mCount;
    private String mName;
    private boolean isSelected;
+   private String mSlaesmen;
+   private String mNote;
 
 
-
-    public PreviewBillsModel(Long mShopId, int mBillId, String mDate , int mCount, String mName ) {
+    public PreviewBillsModel(Long mShopId, int mBillId, String mDate , int mCount, String mName ,String mSlaesmen , String mNote) {
         this.mShopId = mShopId;
         this.mBillId = mBillId;
         this.mDate = mDate;
         this.mCount = mCount;
         this.mName = mName;
         this.isSelected = false;
+        this.mSlaesmen = mSlaesmen;
+        this.mNote = mNote;
     }
 
+    public String getmSlaesmen() {
+        return mSlaesmen;
+    }
+
+    public void setmSlaesmen(String mSlaesmen) {
+        this.mSlaesmen = mSlaesmen;
+    }
+
+    public String getmNote() {
+        return mNote;
+    }
+
+    public void setmNote(String mNote) {
+        this.mNote = mNote;
+    }
 
     public Long getmShopId() {
         return mShopId;

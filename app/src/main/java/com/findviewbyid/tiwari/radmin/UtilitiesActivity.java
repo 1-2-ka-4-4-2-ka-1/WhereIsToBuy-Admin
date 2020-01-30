@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class UtilitiesActivity extends AppCompatActivity {
 
     private ImageView mRegisteredUsers;
@@ -20,11 +23,18 @@ public class UtilitiesActivity extends AppCompatActivity {
     public static DataBaseHelper dataBaseHelper;
     SQLiteDatabase database;
 
+    private FirebaseDatabase databaseFirebase;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_utilities);
+
+
+        databaseFirebase = FirebaseDatabase.getInstance();
+        databaseReference = databaseFirebase.getReference().child("data");
+
 
         mRegisteredUsers = findViewById(R.id.iv_registered_users);
         mRegisteredUsers.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +66,8 @@ public class UtilitiesActivity extends AppCompatActivity {
                 new AlertDialog.Builder(UtilitiesActivity.this)
                         .setIcon(android.R.drawable.ic_delete)
                         .setTitle("Clear Bills")
-                        .setMessage("Bills will stay on server but get cleared from device !")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setMessage("You can clear from device/server")
+                        .setPositiveButton("Device", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dataBaseHelper.clearBills(database);
@@ -66,10 +76,10 @@ public class UtilitiesActivity extends AppCompatActivity {
                             }
 
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Server", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                databaseReference.setValue("");
                             }
                         })
                         .show();

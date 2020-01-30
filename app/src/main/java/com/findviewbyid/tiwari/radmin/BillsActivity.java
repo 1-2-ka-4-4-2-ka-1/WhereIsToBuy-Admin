@@ -47,9 +47,11 @@ public class BillsActivity extends AppCompatActivity {
 
     private FloatingActionButton mSharePdfButton;
 
-
+    private String salesmen;
+    private String note;
     private String date;
     private int id;
+
 
 
     public static final int EDIT_NOTE_REQUEST = 2;
@@ -98,11 +100,13 @@ public class BillsActivity extends AppCompatActivity {
 
         date = getIntent().getStringExtra("date");
         id = getIntent().getIntExtra("id",-1);
+        salesmen = getIntent().getStringExtra("salesmen");
+        note = getIntent().getStringExtra("note");
 
 
 
-//        BillsActivity.LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new BillsActivity.LoadeBillsDataAsyncTask();
-//        lodeItemsDataAsyncTask.execute();
+//      BillsActivity.LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new BillsActivity.LoadeBillsDataAsyncTask();
+//      lodeItemsDataAsyncTask.execute();
 
 
 
@@ -166,7 +170,11 @@ public class BillsActivity extends AppCompatActivity {
         ShopsStorageClass shopsStorageClass = new ShopsStorageClass(BillsActivity.this);
         ShopDetailsModel shop= shopsStorageClass.getShopById(Long.toString(mBillItems.get(0).getMshop_Id()));
         paint.setTextSize(8);
-        String shopDetail = shop.getmShopName()+"  "+shop.getmAddress()+"  "+shop.getmArea()+"  "+shop.getmLandmark()+"  "+shop.getmContactno()+"123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122123456456123123123121123456456123123123121212345645612312312312122";
+        if(shop == null){
+            Toast.makeText(this, "Sync Shops !",Toast.LENGTH_LONG).show();
+            return;
+        }
+        String shopDetail = shop.getmShopName()+"  "+shop.getmAddress()+"  "+shop.getmArea()+"  "+shop.getmLandmark()+"  "+shop.getmContactno()+"";
         Log.i("length is ---",shopDetail.length()+"");
 
 
@@ -189,8 +197,11 @@ public class BillsActivity extends AppCompatActivity {
             l2+="....";
         }
 
+        //shop details
         canvas.drawText(l1, 100-10, 90-30, paint);
         canvas.drawText(l2, 100-40, 130-45, paint);
+
+
 
 
         paint.setStrokeWidth(0.4f);
@@ -229,6 +240,7 @@ public class BillsActivity extends AppCompatActivity {
 
 
         canvas.drawText("Note:", 80-50, 595-60, paint);
+
         canvas.drawText("Total", 390-50, 595-50, paint);
     }
 
@@ -236,6 +248,15 @@ public class BillsActivity extends AppCompatActivity {
 
     public void proceedToBillPreview() {
 // create a new document
+
+        ShopsStorageClass shopsStorageClass = new ShopsStorageClass(BillsActivity.this);
+        ShopDetailsModel shop= shopsStorageClass.getShopById(Long.toString(mBillItems.get(0).getMshop_Id()));
+        if(shop == null){
+            Toast.makeText(this, "Sync Shops !",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
         PdfDocument document = new PdfDocument();
 
         // crate a page description
@@ -300,8 +321,10 @@ public class BillsActivity extends AppCompatActivity {
                 max = 15;
             }
             for (int k = 0; k <= desc.length() / 25; k++) {
+
                 canvas.drawText(desc.substring(m, n), 135 + 40-50, 170 + j-50, paint);
                 m = n;
+
                 if (desc.length() - m < 25) {
                     n = desc.length();
                 } else {
@@ -316,8 +339,40 @@ public class BillsActivity extends AppCompatActivity {
 
         }
 
+        canvas.drawText("#"+id, 490-140, 70-40, paint);
+        canvas.drawText("By: "+salesmen, 490-160, 70-25, paint);
+
+
+
+        String l1="";
+        String l2="";
+
+       // note = "ddfdfdfsdfdfsdfdfdsfdfsdfsdfsdfsdfsdfsdfdsf";
+        int len = note.length();
+        if(len>25)
+        {
+            l1= note.substring(0,24);
+            l2= note.substring(l1.length(),len);
+
+        }else {
+            l1= note;
+            l2="";
+        }
+
+        if(l2.length()>25){
+            l2 = l2.substring(0,25);
+            l2+="....";
+        }
+
+        //shop details
+        canvas.drawText(l1, 80-50, 595-50, paint);
+        canvas.drawText(l2, 80-50, 595-40, paint);
+
+
+
         paint.setTextSize(12);
         canvas.drawText(Double.toString(total), 390-50, 595-20, paint);
+
 
 
         canvas.drawLine(90-50, 190-50, 90-50, 595-80+5, paint);
@@ -405,6 +460,8 @@ public class BillsActivity extends AppCompatActivity {
                 }
 
             }
+
+            canvas.drawText("#"+id, 490-140, 70-30, paint);
 
             paint.setTextSize(12);
             canvas.drawText(Double.toString(total), 390-50, 595-20, paint);

@@ -36,7 +36,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         sql = "CREATE TABLE IF NOT EXISTS _all_shops_tb(_id INTEGER PRIMARY KEY AUTOINCREMENT, _shop_name VARCHAR,_alias VARCHAR ,_address VARCHAR, _area VARCHAR , _location VARCHAR, _sublocation VARCHAR , _landmark VARCHAR , _contact INTEGER , _ratiing VARCHAR ,_group VARCHAR,_shop_id VARCHAR)";
         db.execSQL(sql);
 
-        sql = "CREATE TABLE IF NOT EXISTS _mapping_tb (_id INTEGER PRIMARY KEY AUTOINCREMENT, _mbill_id VARCHAR, _count VARCHAR, _date VARCHAR, _shopname VARCHAR, _shop_id VARCHAR)";
+        sql = "CREATE TABLE IF NOT EXISTS _mapping_tb (_id INTEGER PRIMARY KEY AUTOINCREMENT, _mbill_id VARCHAR, _count VARCHAR, _date VARCHAR, _shopname VARCHAR, _shop_id VARCHAR, _salesmen VARCHAR ,_note VARCHAR )";
         db.execSQL(sql);
 
     }
@@ -89,7 +89,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertMapping(String  _mbill_id ,String _count ,String _date ,String _shopname ,String _shop_id   , SQLiteDatabase database )
+    public void insertMapping(String  _mbill_id ,String _count ,String _date ,String _shopname ,String _shop_id   ,String _salesmen  ,String _note  , SQLiteDatabase database )
     {
         ContentValues mapping=new ContentValues();
 
@@ -98,7 +98,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         mapping.put("_date",parseDateToddMMyyyy(_date));
         mapping.put("_shopname",_shopname);
         mapping.put("_shop_id",_shop_id);
-
+        mapping.put("_salesmen",_salesmen);
+        mapping.put("_note",_note);
         database.insert(_mapping_tb,null, mapping);
 
     }

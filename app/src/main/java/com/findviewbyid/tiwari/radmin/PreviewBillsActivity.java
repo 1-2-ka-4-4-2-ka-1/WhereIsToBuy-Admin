@@ -40,6 +40,8 @@ public class PreviewBillsActivity extends AppCompatActivity {
 
     public  static  int id ;
     public  static  String date ;
+    public static String salesmen;
+    public static String note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +62,14 @@ public class PreviewBillsActivity extends AppCompatActivity {
         recyclerView.setAdapter(previewBillsRecyclerViewAdapter);
 
 
-        String query = "SELECT _shop_id,_mbill_id , _date , _count , _shopname FROM  _mapping_tb  ";
+        String query = "SELECT _shop_id,_mbill_id , _date , _count , _shopname,  _salesmen  ,_note FROM  _mapping_tb  ";
         Cursor cursor = database.rawQuery(query, new String[]{});
         if (cursor != null) {
 
             if (cursor.moveToFirst()) {
 
                 do {
-                    PreviewBillsModel model = new PreviewBillsModel(Long.parseLong(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), cursor.getString(2), Integer.parseInt(cursor.getString(3)), cursor.getString(4));
+                    PreviewBillsModel model = new PreviewBillsModel(Long.parseLong(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), cursor.getString(2), Integer.parseInt(cursor.getString(3)), cursor.getString(4),cursor.getString(5),cursor.getString(6));
                     mMappedItems.add(model);
 
                 } while (cursor.moveToNext());
@@ -102,8 +104,8 @@ public class PreviewBillsActivity extends AppCompatActivity {
                                         for (DataSnapshot params : dataSnapshot.getChildren()) {
                                             if (!params.child("mDate").getValue().toString().trim().equals("--")) {
                                                 // Log.i("data",params.getValue().toString());
-                                                PreviewBillsModel model = new PreviewBillsModel(Long.parseLong(params.child("mShopId").getValue().toString()), Integer.parseInt(params.child("mBillId").getValue().toString()), params.child("mDate").getValue().toString(), Integer.parseInt(params.child("mCount").getValue().toString()), params.child("mName").getValue().toString());
-                                                dataBaseHelper.insertMapping(String.valueOf(model.getmBillId()), String.valueOf(model.getmCount()), model.getmDate(), model.getmName(), String.valueOf(model.getmShopId()), database);
+                                                PreviewBillsModel model = new PreviewBillsModel(Long.parseLong(params.child("mShopId").getValue().toString()), Integer.parseInt(params.child("mBillId").getValue().toString()), params.child("mDate").getValue().toString(), Integer.parseInt(params.child("mCount").getValue().toString()), params.child("mName").getValue().toString(),params.child("mSlaesmen").getValue().toString(),params.child("mNote").getValue().toString());
+                                                dataBaseHelper.insertMapping(String.valueOf(model.getmBillId()), String.valueOf(model.getmCount()), model.getmDate(), model.getmName(), String.valueOf(model.getmShopId()),model.getmSlaesmen() ,model.getmNote(),database);
                                                 mMappedItems.add(model);
                                                 params.child("mDate").getRef().setValue("--");
                                                 previewBillsRecyclerViewAdapter.notifyItemInserted(mMappedItems.size());
@@ -146,11 +148,17 @@ public class PreviewBillsActivity extends AppCompatActivity {
 
                 id = mMappedItems.get(position).getmBillId();
                 date= mMappedItems.get(position).getmDate();
+                salesmen = mMappedItems.get(position).getmSlaesmen();
+                note = mMappedItems.get(position).getmNote();
+
                 mMappedItems.get(position).setSelected(true);
                 recyclerView.getChildAt(position).setBackgroundColor(Color.CYAN);
                 Intent intent  =new Intent(PreviewBillsActivity.this,BillsActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("date",date);
+                intent.putExtra("salesmen",salesmen);
+                intent.putExtra("note",note);
+
                 startActivity(intent);
 
             }
