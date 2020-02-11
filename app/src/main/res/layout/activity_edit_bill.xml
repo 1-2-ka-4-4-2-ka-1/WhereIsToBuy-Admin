@@ -106,12 +106,21 @@
                         android:id="@+id/tv_unit"
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="260dp"
+                        android:layout_marginRight="180dp"
                         android:layout_weight="1"
                         android:gravity="center|center_horizontal"
                         android:padding="5dp"
                         android:paddingRight="10dp"
                         android:text="Kg" />
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="29dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingRight="20dp"
+                        android:text="Qty" />
 
                 </LinearLayout>
 
@@ -147,7 +156,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center|left"
-                        android:padding="10dp"
+                        android:padding="2dp"
                         android:text="Rs" />
 
                     <LinearLayout

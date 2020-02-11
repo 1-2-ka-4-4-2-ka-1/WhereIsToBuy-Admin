@@ -30,7 +30,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BillsActivity extends AppCompatActivity {
 
@@ -82,7 +85,9 @@ public class BillsActivity extends AppCompatActivity {
         mSharePdfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+           if(mBillItems.size()==0){
+               Toast.makeText(BillsActivity.this,"Bill Empty",Toast.LENGTH_LONG).show();
+           }else
            proceedToBillPreview();
 
             }
@@ -103,6 +108,10 @@ public class BillsActivity extends AppCompatActivity {
         salesmen = getIntent().getStringExtra("salesmen");
         note = getIntent().getStringExtra("note");
 
+        if(date.contains("/"))
+        {
+            date = parseDateToddMMyyyy(date);
+        }
 
 
 //      BillsActivity.LoadeBillsDataAsyncTask lodeItemsDataAsyncTask = new BillsActivity.LoadeBillsDataAsyncTask();
@@ -110,11 +119,10 @@ public class BillsActivity extends AppCompatActivity {
 
 
 
-        Log.i("date is ---",id+"");
+        Log.i("date is ---",date+" "+id);
         String query = "SELECT B._bill_id  , B._desc , B._unit , B._rate , B._qty   ,B._amount , B._shop_id  , B._date ,_count , B._id_label FROM  _all_bills_tb B WHERE Date(B._date) = Date(?) AND B._id_label = (?)";
-        Cursor cursor = database.rawQuery(query, new String[]{(date),String.valueOf(id)});
+        Cursor cursor = database.rawQuery(query, new String[]{((date)),String.valueOf(id)});
         if (cursor != null) {
-
             if (cursor.moveToFirst()) {
                 do {
 
@@ -540,8 +548,6 @@ public class BillsActivity extends AppCompatActivity {
 
 
 
-
-
     public class LoadeBillsDataAsyncTask extends AsyncTask<ArrayList<BillItem>, Void, ArrayList<BillItem>> {
         @Override
         protected void onPostExecute(ArrayList<BillItem> billItems) {
@@ -681,5 +687,22 @@ public class BillsActivity extends AppCompatActivity {
         }
     }
 
+    public String parseDateToddMMyyyy(String time) {
+        String inputPattern = "dd/MM/yy";
+        String outputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i(time,str);
+        return str;
+    }
 }

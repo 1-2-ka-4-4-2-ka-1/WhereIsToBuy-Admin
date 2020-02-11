@@ -2,6 +2,7 @@ package com.findviewbyid.tiwari.radmin;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -22,7 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PreviewBillsActivity extends AppCompatActivity {
 
@@ -47,6 +51,8 @@ public class PreviewBillsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bills_preview);
+        //Screen Orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         dataBaseHelper = new DataBaseHelper(this);
         database = dataBaseHelper.getWritableDatabase();
@@ -155,7 +161,7 @@ public class PreviewBillsActivity extends AppCompatActivity {
                 recyclerView.getChildAt(position).setBackgroundColor(Color.CYAN);
                 Intent intent  =new Intent(PreviewBillsActivity.this,BillsActivity.class);
                 intent.putExtra("id",id);
-                intent.putExtra("date",date);
+                intent.putExtra("date",(date));
                 intent.putExtra("salesmen",salesmen);
                 intent.putExtra("note",note);
 
@@ -267,8 +273,8 @@ public class PreviewBillsActivity extends AppCompatActivity {
 
                                                     dataBaseHelper.insertBill(String.valueOf(billItem.getBill_id()), String.valueOf(billItem.getMitem_amount()),
                                                             billItem.getMitem_desc(), billItem.getMitem_id_label(), String.valueOf(billItem.getMitem_qty()),
-                                                            String.valueOf(billItem.getMitem_rate()), billItem.getMitem_unit(), billItem.mshop_Id.toString(), billItem.getMdate(), String.valueOf(billItem.getMcount()), database);
-
+                                                            String.valueOf(billItem.getMitem_rate()), billItem.getMitem_unit(), billItem.mshop_Id.toString(),(billItem.getMdate()), String.valueOf(billItem.getMcount()), database);
+                                                    Log.i("this executed","preview");
                                                     bill.child("bill_id").getRef().setValue("--");
                                                 }
                                             }
@@ -304,6 +310,25 @@ public class PreviewBillsActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public String parseDateToddMMyyyy(String time) {
+        String inputPattern = "dd/MM/yy";
+        String outputPattern = "yyyy-MM-dd";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i(time,str);
+        return str;
     }
 
 

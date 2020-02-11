@@ -2,6 +2,7 @@ package com.findviewbyid.tiwari.radmin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,6 +55,9 @@ public class ShopsActivity extends AppCompatActivity implements ShopsEditDialogu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shops);
+        //Screen Orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         databaseFirebase = FirebaseDatabase.getInstance();
 

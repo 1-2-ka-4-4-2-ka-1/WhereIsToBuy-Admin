@@ -3,6 +3,7 @@ package com.findviewbyid.tiwari.radmin;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -75,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
 
 
 
-
-
     private Spinner mFilterItem;
     private TextView mFilterOnDate;
     private TextView mFilterFromDate;
@@ -115,6 +114,10 @@ public class MainActivity extends AppCompatActivity implements   DatePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Screen Orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
         databaseFirebase = FirebaseDatabase.getInstance();
         mAllBillsList = new ArrayList<>();
 
