@@ -8,10 +8,5 @@ Admin panel for WhereIsToBuy(Billing App for stores/shops) Where you can analyse
 *Filter Bills
 *Export as PDF
 *Export to Excel
-
-![Screenshot_20200214-232518](https://user-images.githubusercontent.com/42827589/74555338-8a6d0f00-4f81-11ea-862b-66abdc3975a7.png)
-![Screenshot_20200214-230153](https://user-images.githubusercontent.com/42827589/74555152-1b8fb600-4f81-11ea-9e4d-92d8980cb86a.png)
-![Screenshot_20200214-230133](https://user-images.githubusercontent.com/42827589/74555154-1c284c80-4f81-11ea-98cb-b43d9f91cbbc.png)
-![Screenshot_20200214-230112](https://user-images.githubusercontent.com/42827589/74555155-1cc0e300-4f81-11ea-9478-15cb84db84ee.png)
-![Screenshot_20200214-230058](https://user-images.githubusercontent.com/42827589/74555156-1cc0e300-4f81-11ea-811a-5bfecd118720.png)
-![Screenshot_20200214-230040](https://user-images.githubusercontent.com/42827589/74555149-1b8fb600-4f81-11ea-85b7-62de56427497.png)
+![BeFunky-collage](https://user-images.githubusercontent.com/42827589/106391886-872e9580-6415-11eb-8c1e-4161c1071f4c.jpg)
+![threed_mockup](https://user-images.githubusercontent.com/42827589/106391965-f1473a80-6415-11eb-9f71-892365d7609c.png)
